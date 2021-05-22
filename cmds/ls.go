@@ -1,0 +1,28 @@
+package cmds
+
+import (
+	"fmt"
+	"os"
+	"errors"
+	"github.com/Syssos/Go_Shell/color"
+)
+
+func Ls(args []string) error{
+
+	for _, arg := range args {
+		if string([]rune(arg)[0]) == "-" {
+			fmt.Printf("%v: is a flag statement\n", string([]rune(arg)[1:]))
+		}
+	}
+	files, err := os.ReadDir(".")
+
+	if err != nil {
+		return errors.New(fmt.Sprintf("%v",err))
+	}
+
+	for _, file := range files {
+		fmt.Println(color.Purple + file.Name() + color.Reset)
+	}
+
+	return nil
+}
