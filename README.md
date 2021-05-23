@@ -1,4 +1,5 @@
-# Go Shell
+# Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)
+[
 
 This is a simple shell built in go designed to give you basic functionality such as changing directory and listing files.
 
