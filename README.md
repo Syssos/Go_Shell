@@ -1,4 +1,4 @@
-# Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)[![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
+# Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
 
 ![Go Shell img](https://github.com/Syssos/Go_Shell/blob/main/Go_Shell.png?raw=true)
 
