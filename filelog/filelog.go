@@ -13,7 +13,8 @@ var greetingMessage string = fmt.Sprintf("Hello there, General %v. Welcome to th
 var saluteMessage string = "Later homeboy"
 
 type Flog struct {
-	Greeting, Salutation, Errormsg, LogFile string
+	Greeting, Salutation, LogFile string
+	Errormsg error
 }
 
 func (m Flog) Greet() {
@@ -30,7 +31,7 @@ func (m Flog) Salute() {
 
 func (m Flog) Err() {
 
-	m.Log(m.Errormsg)
+	m.Log(fmt.Sprintf("%v", m.Errormsg))
 	fmt.Println(m.Errormsg)
 }
 
@@ -55,8 +56,8 @@ func F_init() Flog {
 	var mes Flog = Flog{
 		greetingMessage, 
 		saluteMessage, 
-		"",
 		"/tmp/GoShellLogfile.txt",
+		nil,
 	}
 
 	return mes

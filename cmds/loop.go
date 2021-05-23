@@ -11,12 +11,42 @@ import (
 	"strings"
 )
 
+// Setting up logging/getting current user data
 var current_user string = filelog.GetUser()
 var current_dir string = filelog.GetCurrentDir()
 var flog filelog.Flog = filelog.F_init()
 
+// Setting up commands
+var cd Cd_cmd = Cd_cmd{[]string{}}
+var pwd Pwd_cmd = Pwd_cmd{[]string{}}
+var ls Ls_cmd = Ls_cmd{[]string{}}
+var command_struct commands = commands{ls, pwd, cd}
+
+// Commands struct will be a "list" of commands shell can run
+type commands struct {
+	ls Ls_cmd
+	pwd Pwd_cmd
+	cd Cd_cmd
+}
+// used to execute every command in command struct
+type exec interface {
+	Run() error
+}
+// responsible for running and logging errors with command
+func execute(e exec) {
+	err := e.Run()
+	if err != nil {
+		flog.Errormsg = errors.New(fmt.Sprintf("cmd: %v", err))
+		flog.Err()
+	}
+}
+
 func Loop() error{
-	
+	/*
+		Logs start/finish of program, runs command loop
+		Return: Error if command loop ran into problems
+	*/
+
 	flog.Greet()
 	suc, err := cmdLoop()
 	if err != nil {
@@ -29,6 +59,11 @@ func Loop() error{
 }
 
 func cmdLoop() (int, error){
+	/*
+		Infinite loop, displays input line, everything in loop runs each time enter key is pressed
+		Return: Int representation of success or failure, error if error occurs
+
+	*/
 
 	for ;; {
 
@@ -45,7 +80,7 @@ func cmdLoop() (int, error){
 		}
 		_, cerr := runCommand(parsed_input[0], parsed_input[1:])
 		if cerr != nil {
-			flog.Errormsg = fmt.Sprintf("%v", cerr)
+			flog.Errormsg = cerr
 			flog.Err()
 		}
 	}
@@ -53,6 +88,11 @@ func cmdLoop() (int, error){
 }
 
 func getCommands(cmd string) []string {
+	/*
+
+
+	*/
+
 	commands := []string{}
 
 	words := strings.Fields(cmd)
@@ -66,22 +106,16 @@ func getCommands(cmd string) []string {
 func runCommand(cmd string, args []string) (int, error) {
 	switch cmd {
 	case "ls":
-		lsErr := Ls(args)
-		if lsErr != nil {
-			return 1, errors.New(fmt.Sprintf("ls: %v", lsErr))
-		}
+		command_struct.ls.args = args
+		execute(command_struct.ls)
 		return 0, nil
 	case "pwd":
-		pwdErr := Pwd(args)
-		if pwdErr != nil {
-			return 1, errors.New(fmt.Sprintf("pwd: %v", pwdErr))
-		}
+		command_struct.pwd.args = args
+		execute(command_struct.pwd)
 		return 0, nil
 	case "cd":
-		cdErr := Cd(args)
-		if cdErr != nil {
-			return 1, errors.New(fmt.Sprintf("pwd: %v", cdErr))
-		}
+		command_struct.cd.args = args
+		execute(command_struct.cd)
 		return 0, nil
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
