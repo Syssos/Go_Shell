@@ -1,5 +1,7 @@
 # Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)
 
+![Go Shell img](https://github.com/Syssos/Go_Shell/blob/main/Go_Shell.png?raw=true)
+
 This is a simple shell built in go designed to give you basic functionality such as changing directory and listing files. This is intended to be used in future projects, if need arise for a shell. Over time this shell will be worked on to account for tasks I am use often such as running nmap scans and sorting output.
 
 ## Main
