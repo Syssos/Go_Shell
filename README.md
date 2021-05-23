@@ -38,6 +38,11 @@ go install .
 
 This will place a bin file in "$PATH/bin" called "Go_Shell", if the module name was used above. Running this command will give you the Go Shell.
 
+For me this looks like
+```
+~/go/bin/Go_Shell
+```
+
 Alternativly you can install the "cmds" package with ``` go get ``` and create a script that utilizes the Loop function much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
 ## Main
