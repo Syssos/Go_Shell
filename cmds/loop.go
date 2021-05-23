@@ -2,8 +2,8 @@ package cmds
 
 import (
 	"github.com/Syssos/Go_Shell/color"
+	"github.com/Syssos/Go_Shell/filelog"
 	"os"
-	"os/user"
 	"fmt"
 	"bufio"
 	"path"
@@ -11,76 +11,21 @@ import (
 	"strings"
 )
 
-var current_user string = getUser()
-var current_dir string = getCurrentDir()
-var greetingMessage string = fmt.Sprintf("Hello there, General %v. Welcome to the shit show", current_user)
-var saluteMessage string = "Later homeboy"
-
-func getUser() string{
-	use, err := user.Current()
-	if err != nil {
-		fmt.Println(err)
-	}
-	return use.Name
-}
-
-type messages struct {
-	Greeting, Salutation, Errormsg, LogFile string
-}
-
-func (m messages) Greet() {
-
-	m.Log(fmt.Sprintf("User %v started instance", current_user))
-	fmt.Println(m.Greeting, "\n")
-}
-
-func (m messages) Salute() {
-
-	m.Log(fmt.Sprintf("User %v exited instance", current_user))
-	fmt.Println(m.Salutation)
-}
-
-func (m messages) Err() {
-
-	m.Log(m.Errormsg)
-	fmt.Println(m.Errormsg)
-}
-
-func (m messages) Log(msg string) {
-	f, err := os.OpenFile(m.LogFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-	    fmt.Println(err)
-	}
-	f.Write([]byte(msg+"\n"))
-	f.Close()
-}
-
-
-var mes messages = messages{
-	greetingMessage, 
-	saluteMessage, 
-	"",
-	current_dir + "/logfile.txt",
-}
+var current_user string = filelog.GetUser()
+var current_dir string = filelog.GetCurrentDir()
+var flog filelog.Flog = filelog.F_init()
 
 func Loop() error{
-	mes.Greet()
+	
+	flog.Greet()
 	suc, err := cmdLoop()
 	if err != nil {
 		fmt.Println(err)
 	} else if suc == 0 {
-		mes.Salute()
+		flog.Salute()
 	}
 
 	return nil
-}
-
-func getCurrentDir() string{
-	cwd, err := os.Getwd()
-	if err != nil {
-		fmt.Println(err)
-	}
-	return cwd
 }
 
 func cmdLoop() (int, error){
@@ -88,7 +33,7 @@ func cmdLoop() (int, error){
 	for ;; {
 
 		input := bufio.NewReader(os.Stdin)
-		cwd := getCurrentDir()
+		cwd := filelog.GetCurrentDir()
 
 		fmt.Printf("%v - %v: ", color.Red + current_user + color.Reset, color.Blue + path.Base(cwd) + color.Reset)
 		in, _ := input.ReadString('\n')
@@ -100,8 +45,8 @@ func cmdLoop() (int, error){
 		}
 		_, cerr := runCommand(parsed_input[0], parsed_input[1:])
 		if cerr != nil {
-			mes.Errormsg = fmt.Sprintf("%v", cerr)
-			mes.Err()
+			flog.Errormsg = fmt.Sprintf("%v", cerr)
+			flog.Err()
 		}
 	}
 	return 1, errors.New("End of loop")
