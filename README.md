@@ -1,6 +1,6 @@
 # Go Shell
 
-This is a simple shell built in go designed to give you basic functionality such as changing directory and listing files. There will be 2 branches that get utilized most, the main branch will cantain a stable version of the program, while the dev branch will contain the development stages that could have bugs.
+This is a simple shell built in go designed to give you basic functionality such as changing directory and listing files.
 
 ## Main
 
