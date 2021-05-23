@@ -10,8 +10,6 @@ If you wish to use any of the packages, the deirectory will have a readme contai
 
 These instructions are for targeted towards linux user's.
 
-### Building
-
 To start things of this will require some knowledge of working with Go modules, and packages. As well as how to build and install programs. If you have any questions about Go or how to do these things I just so happen to have a repository [here](https://github.com/Syssos/Learning_Go) I created as I learned Go, leaving notes behind that may be useful to you.
 
 Clone the package to a location you can use.
