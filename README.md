@@ -9,3 +9,7 @@ This file will call the Loop function from the cmds package. This loop is what i
 ## Logging
 
 This program will log errors to a file called "logfile.txt". It will be placed within the working directory upon running the program. This is temporary as I figure out where the most convient place for this file to live on the system is.
+
+## Travis
+
+Very unhappy with this, .org worked the first time I used it no issues. the .com is the worst thing I've ever seen.
