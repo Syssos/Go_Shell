@@ -7,7 +7,37 @@ This is a simple shell built in go designed to give you basic functionality such
 
 ![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/images/Shell.PNG)
 
+## Usage
 
+There are currently 3 working commands and no help system set up yet. I aplogize, but becuase this project is actively being worked on there should be self help system soon. To make up for the lack of self help below I will list the commands and how to utilize them
+
+### ls
+This command should work just about the same as it does an a native linux system, minus advanced functionality. While it takes a location to list it cannot except flags at the moment.
+
+```
+$ ls
+$ ls ../
+$ ls /Go_Shell
+```
+### pwd
+This command will print the working directory. Its a pretty straight forward command and doesn't take arguments.
+
+```
+$ pwd
+```
+### cd
+This command changes the working directory much like cd in linux, like ls this will take a location to change to but will not accept flags.
+
+```
+$ cd ../
+$ cd Go_Shell/
+```
+### exit
+This exits the shell properly and allows for logging of the user quiting.
+
+```
+$ exit
+```
 ## Install
 
 If you wish to use any of the packages, the deirectory will have a readme containing all of the information you'll need to get started. To use the command line tool as I do I will explain how to do so below.
@@ -59,4 +89,4 @@ This program will log errors to a file called "GoShellLogfile.txt". Due to the s
 
 ## Travis
 
-Very unhappy with this, .org worked the first time I used it no issues. the .com is the worst thing I've ever seen.
+Travis-CI is a bonus feature of this repository. Due to the nature of this project the code can change at a fast pace. To prevent errors from occuring to someone who clones the repo, the travis build state is indicated at the top of this readme. I have multiple machines and need to share code between them. Travis allows me to do that and ensure the code is working at the same time.
