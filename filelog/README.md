@@ -30,6 +30,7 @@ LogOne.Log("Message to log")
 
 ```go
 LogOne.Errormsg = errors.New("Error to log")
+LogOne.Err()
 ``` 
 
 ### Logging errors from function return
