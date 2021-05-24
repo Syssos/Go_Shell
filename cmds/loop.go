@@ -3,6 +3,7 @@ package cmds
 import (
 	"github.com/Syssos/Go_Shell/color"
 	"github.com/Syssos/Go_Shell/filelog"
+	"github.com/Syssos/Go_Shell/microservices/isrunning"
 	"os"
 	"fmt"
 	"bufio"
@@ -11,23 +12,31 @@ import (
 	"strings"
 )
 
-// Setting up logging/getting current user data
-var current_user string = filelog.GetUser()
-var current_dir string = filelog.GetCurrentDir()
+// Setting up logging
 var flog filelog.Flog = filelog.F_init()
 
-// Setting up commands
+// to change log file
+// flod.LogeFile = "path/to/file"
+
+// Setting up commands from cmds directory
 var cd Cd_cmd = Cd_cmd{[]string{}}
 var pwd Pwd_cmd = Pwd_cmd{[]string{}}
 var ls Ls_cmd = Ls_cmd{[]string{}}
-var command_struct commands = commands{ls, pwd, cd}
+
+// Setting up command from another package then cmds
+var running isrunning.Isrunning_cmd = isrunning.Isrunning_cmd{[]string{}, "", false}
+
+// Creating command struct to hold available commands
+var command_struct commands = commands{ls, pwd, cd, running}
 
 // Commands struct will be a "list" of commands shell can run
 type commands struct {
 	ls Ls_cmd
 	pwd Pwd_cmd
 	cd Cd_cmd
+	running isrunning.Isrunning_cmd
 }
+
 // used to execute every command in command struct
 type exec interface {
 	Run() error
@@ -47,11 +56,13 @@ func Loop() error{
 		Return: Error if command loop ran into problems
 	*/
 
+	// Logging when the program is starting/Printing greeting message
 	flog.Greet()
 	suc, err := cmdLoop()
 	if err != nil {
 		fmt.Println(err)
 	} else if suc == 0 {
+		// Logging when the user ends the program (only works with "exit")
 		flog.Salute()
 	}
 
@@ -67,14 +78,13 @@ func cmdLoop() (int, error){
 
 	for ;; {
 
-		input := bufio.NewReader(os.Stdin)
 		cwd := filelog.GetCurrentDir()
+		cuser := filelog.GetUser()
+		fmt.Printf("%v - %v: ", color.Red + cuser + color.Reset, color.Blue + path.Base(cwd) + color.Reset)
 
-		fmt.Printf("%v - %v: ", color.Red + current_user + color.Reset, color.Blue + path.Base(cwd) + color.Reset)
+		input := bufio.NewReader(os.Stdin)
 		in, _ := input.ReadString('\n')
-
-		parsed_input := getCommands(in)
-
+		parsed_input := createCmdSlice(in)
 		if parsed_input[0] == "exit" {
 			return 0, nil
 		}
@@ -87,9 +97,10 @@ func cmdLoop() (int, error){
 	return 1, errors.New("End of loop")
 }
 
-func getCommands(cmd string) []string {
+func createCmdSlice(cmd string) []string {
 	/*
-
+		Parses input from user and turns it into string slice
+		Return: returns string slice of commands and flags
 
 	*/
 
@@ -104,6 +115,12 @@ func getCommands(cmd string) []string {
 }
 
 func runCommand(cmd string, args []string) (int, error) {
+	/*
+		Switch statement responsible for executing command in command struct
+		Return: int representation of err or success, Error if error occurs
+
+	*/
+
 	switch cmd {
 	case "ls":
 		command_struct.ls.args = args
@@ -116,6 +133,15 @@ func runCommand(cmd string, args []string) (int, error) {
 	case "cd":
 		command_struct.cd.args = args
 		execute(command_struct.cd)
+		return 0, nil
+	case "cody":
+		if len(args) > 0 {
+			command_struct.running.Args = args
+			command_struct.running.Link = args[0]
+			execute(command_struct.running)
+			return 0, nil
+		}
+		fmt.Println("Added link")
 		return 0, nil
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))

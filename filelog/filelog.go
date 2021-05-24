@@ -4,37 +4,45 @@ import (
 	"os"
 	"os/user"
 	"fmt"
+	"time"
 )
 
+// Getting current user for messages
 var current_user string = GetUser()
-var current_dir string = GetCurrentDir()
-var homeDir string = GetHomeDir()
+
+// Creating messages to display to the user
 var greetingMessage string = fmt.Sprintf("Hello there, General %v. Welcome to the shit show", current_user)
 var saluteMessage string = "Later homeboy"
+var logfile string = "/tmp/GoShellLogfile.txt"
 
+// Flog structure to keep track of needed material
 type Flog struct {
 	Greeting, Salutation, LogFile string
 	Errormsg error
 }
 
+// Prints greeting message and logs when the shell instance was started
 func (m Flog) Greet() {
-
-	m.Log(fmt.Sprintf("User %v started instance", current_user))
+	dt := time.Now()
+	m.Log(fmt.Sprintf("%v - User %v started instance",  dt.Format("01-02-2006 15:04:05"), current_user))
 	fmt.Println(m.Greeting, "\n")
 }
 
+// Prints salute message and logs when the shell instance is closed
 func (m Flog) Salute() {
-
-	m.Log(fmt.Sprintf("User %v exited instance", current_user))
+	dt := time.Now()
+	m.Log(fmt.Sprintf("%v - User %v exited instance",  dt.Format("01-02-2006 15:04:05"), current_user))
 	fmt.Println(m.Salutation)
 }
 
+// Prints error message and logs it
 func (m Flog) Err() {
-
-	m.Log(fmt.Sprintf("%v", m.Errormsg))
+	dt := time.Now()
+	m.Log(fmt.Sprintf("%v - %v",  dt.Format("01-02-2006 15:04:05"), m.Errormsg))
 	fmt.Println(m.Errormsg)
 }
 
+// Command that opens log file and writes content to it.
 func (m Flog) Log(msg string) {
 	f, err := os.OpenFile(m.LogFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
@@ -44,6 +52,7 @@ func (m Flog) Log(msg string) {
 	f.Close()
 }
 
+// Command to get the current users name
 func GetUser() string{
 	use, err := user.Current()
 	if err != nil {
@@ -52,17 +61,18 @@ func GetUser() string{
 	return use.Name
 }
 
+// Creates instance of Flog to use in code, multiple Flog instances can be used to log to multiple files
 func F_init() Flog {
 	var mes Flog = Flog{
 		greetingMessage, 
 		saluteMessage, 
-		"/tmp/GoShellLogfile.txt",
+		logfile,
 		nil,
 	}
-
 	return mes
 }
 
+// Gets the current user direectory 
 func GetHomeDir() string {
 	dirname, err := os.UserHomeDir()
 	if err != nil {
@@ -72,6 +82,7 @@ func GetHomeDir() string {
 	return dirname
 }
 
+// Gets the current working directory for the current directory the user is in when the program is ran.
 func GetCurrentDir() string{
 	cwd, err := os.Getwd()
 	if err != nil {
