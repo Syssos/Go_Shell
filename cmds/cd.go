@@ -8,15 +8,15 @@ import (
 
 // Creating struct for cd command
 type Cd_cmd struct {
-	args []string
+	Args []string
 }
 
 // method to run the command
 func (cmd Cd_cmd) Run() error {
-	if len(cmd.args) > 0 {
-		os.Chdir(cmd.args[0])
-    	return nil
+	if len(cmd.Args) == 0 {
+    	return errors.New("empty string passed to cd")
 	}
 	
-    return errors.New("empty string passed to cd")
+	os.Chdir(cmd.Args[0])
+    return nil
 }

@@ -123,15 +123,15 @@ func runCommand(cmd string, args []string) (int, error) {
 
 	switch cmd {
 	case "ls":
-		command_struct.ls.args = args
+		command_struct.ls.Args = args
 		execute(command_struct.ls)
 		return 0, nil
 	case "pwd":
-		command_struct.pwd.args = args
+		command_struct.pwd.Args = args
 		execute(command_struct.pwd)
 		return 0, nil
 	case "cd":
-		command_struct.cd.args = args
+		command_struct.cd.Args = args
 		execute(command_struct.cd)
 		return 0, nil
 	case "cody":

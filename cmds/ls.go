@@ -9,12 +9,12 @@ import (
 
 // Creating struct for ls command
 type Ls_cmd struct {
-	args []string
+	Args []string
 }
 
 // Method to run the ls command
 func (cmd Ls_cmd) Run() error {
-	for _, arg := range cmd.args {
+	for _, arg := range cmd.Args {
 		if string([]rune(arg)[0]) == "-" {
 			fmt.Printf("%v: is a flag statement\n", string([]rune(arg)[1:]))
 		}
