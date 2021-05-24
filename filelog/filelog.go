@@ -11,7 +11,7 @@ import (
 var current_user string = GetUser()
 
 // Creating messages to display to the user
-var greetingMessage string = fmt.Sprintf("Hello there, General %v. Welcome to the shit show", current_user)
+var greetingMessage string = fmt.Sprintf("Hello there, General %v. Welcome to the Go Shell", current_user)
 var saluteMessage string = "Later homeboy"
 var logfile string = "/tmp/GoShellLogfile.txt"
 
