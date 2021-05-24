@@ -2,20 +2,20 @@
 
 ![Go Shell img](https://raw.githubusercontent.com/Syssos/Go_Shell/main/images/Go_Shell.png)
 
-This is a simple shell built in go designed to give you basic functionality such as changing directory and listing files. This is intended to be used in future projects, if need arise for a shell. Over time this shell will be worked on to account for tasks I am use often such as running nmap scans and sorting output.
+This is a simple shell built in go designed to give you basic functionality such as changing directories or listing files. This is intended to be used in future projects, if need arise for a shell. Over time this shell will develop to account for tasks I use often such as running nmap scans or sorting/refining output files.
 
 
 ![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/images/Shell.PNG)
 
 ## Install
 
-If you wish to use any of the packages, the deirectory will have a readme containing all of the information you'll need to get started. To use the command line tool as I do I will explain how to do so below.
+All of the packages used in this repository were designed with external usablility in mind. Each package directory will contain a readme with all of the information you'll need to get started. The directions below should get you started with using the shell as.
 
 These instructions are for targeted towards linux user's.
 
-To start things of this will require some knowledge of working with Go modules, and packages. As well as how to build and install programs. If you have any questions about Go or how to do these things I just so happen to have a repository [here](https://github.com/Syssos/Learning_Go) I created as I learned Go, leaving notes behind that may be useful to you.
+To start things off this will require some knowledge of working with Go modules, and packages. As well as how to build and install programs. If you have any questions about Go or how to do these things I just so happen to have a repository [here](https://github.com/Syssos/Learning_Go) I created as I learned Go, leaving notes behind that may be useful to you.
 
-Clone the package to a location you can use.
+To get the files we need clone the package to a location you can use.
 
 ``` 
 git clone https://github.com/Syssos/Go_Shell.git
@@ -40,6 +40,7 @@ go install .
 This will place a bin file in "$PATH/bin" called "Go_Shell", if the module name was used above. Running this command will give you the Go Shell.
 
 For me this looks like
+
 ```
 ~/go/bin/Go_Shell
 ```
