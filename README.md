@@ -7,37 +7,6 @@ This is a simple shell built in go designed to give you basic functionality such
 
 ![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/images/Shell.PNG)
 
-## Usage
-
-There are currently 3 working commands and no help system set up yet. I aplogize, but becuase this project is actively being worked on there should be self help system soon. To make up for the lack of self help below I will list the commands and how to utilize them
-
-### ls
-This command should work just about the same as it does an a native linux system, minus advanced functionality. While it takes a location to list it cannot except flags at the moment.
-
-```
-$ ls
-$ ls ../
-$ ls /Go_Shell
-```
-### pwd
-This command will print the working directory. Its a pretty straight forward command and doesn't take arguments.
-
-```
-$ pwd
-```
-### cd
-This command changes the working directory much like cd in linux, like ls this will take a location to change to but will not accept flags.
-
-```
-$ cd ../
-$ cd Go_Shell/
-```
-### exit
-This exits the shell properly and allows for logging of the user quiting.
-
-```
-$ exit
-```
 ## Install
 
 If you wish to use any of the packages, the deirectory will have a readme containing all of the information you'll need to get started. To use the command line tool as I do I will explain how to do so below.
@@ -74,10 +43,40 @@ For me this looks like
 ```
 ~/go/bin/Go_Shell
 ```
-
 Alternativly you can install the "cmds" package with ``` go get ``` and create a script that utilizes the Loop function much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
-## Main
+## Usage
+
+There are currently 3 working commands and no help system set up yet. I aplogize, but becuase this project is actively being worked on there should be self help system soon. To make up for the lack of self help below I will list the commands and how to utilize them
+
+### ls
+This command should work just about the same as it does an a native linux system, minus advanced functionality. While it takes a location to list it cannot except flags at the moment.
+
+```
+$ ls
+$ ls ../
+$ ls /Go_Shell
+```
+### pwd
+This command will print the working directory. Its a pretty straight forward command and doesn't take arguments.
+
+```
+$ pwd
+```
+### cd
+This command changes the working directory much like cd in linux, like ls this will take a location to change to but will not accept flags.
+
+```
+$ cd ../
+$ cd Go_Shell/
+```
+### exit
+This exits the shell properly and allows for logging of the user quiting.
+
+```
+$ exit
+```
+## Main.go
 
 This file will call the Loop function from the cmds package. This loop is what is responsible for all of the commands. The plans to re-use this code mean I need all of the code in one package, more or less, that I can grab and use in another project.
 
