@@ -24,7 +24,7 @@ func (cmd Cd_cmd) Run() error {
 }
 
 func (cmd Cd_cmd) Usage() {
-	usagestr := "Made it to usage"
+	usagestr := "\n\tcd - Change directory\n\n\tUsage:\n\t\tcd <path/to/directory>\n"
 	colorfied := color.Yellow + usagestr + color.Reset
 	fmt.Println(colorfied)
 }
@@ -52,7 +52,7 @@ func (cmd Pwd_cmd) Run() error {
 }
 
 func (cmd Pwd_cmd) Usage() {
-	usagestr := "Made it to usage"
+	usagestr := "\n\tpwd - Print working directory\n\n\tUsage:\n\t\tpwd\n"
 	colorfied := color.Yellow + usagestr + color.Reset
 	fmt.Println(colorfied)
 }
@@ -96,7 +96,7 @@ func (cmd Ls_cmd) Run() error {
 }
 
 func (cmd Ls_cmd) Usage() {
-	usagestr := "Made it to usage"
+	usagestr := "\n\tls - List files in directory\n\n\tUsage:\n\t\tls\n\t\tls <path/to/directory>\n"
 	colorfied := color.Yellow + usagestr + color.Reset
 	fmt.Println(colorfied)
 }

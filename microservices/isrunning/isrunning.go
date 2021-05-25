@@ -19,5 +19,7 @@ func (cmd Isrunning_cmd) Run() error{
 }
 
 func (cmd Isrunning_cmd) Usage() {
-	fmt.Println("Made it to usage")
+	usagestr := "\n\tcody - Currently not configure for use, more for an example\n\n\tUsage:\n\t\tcody <url>\n"
+	colorfied := usagestr
+	fmt.Println(colorfied)
 }
