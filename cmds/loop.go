@@ -155,14 +155,9 @@ func runCommand(cmd string, args []string) (int, error) {
 		command_struct.cd.Args = args
 		execute(command_struct.cd)
 		return 0, nil
-	case "cody":
-		if len(args) > 0 {
-			command_struct.running.Args = args
-			command_struct.running.Link = args[0]
-			execute(command_struct.running)
-			return 0, nil
-		}
-		fmt.Println("Added link")
+	case "site":
+		command_struct.running.Args = args
+		execute(command_struct.running)
 		return 0, nil
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
