@@ -17,3 +17,7 @@ func (cmd Isrunning_cmd) Run() error{
 	fmt.Println(cmd.Link)
 	return nil
 }
+
+func (cmd Isrunning_cmd) Usage() {
+	fmt.Println("Made it to usage")
+}

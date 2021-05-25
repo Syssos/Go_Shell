@@ -50,6 +50,17 @@ func execute(e exec) {
 	}
 }
 
+// Interface used to print usage for command
+type info interface {
+	Usage()
+}
+
+// Function that prints usage
+func PrintUsage(i info) {
+	i.Usage()
+}
+
+// Start of command line process, responsible for greeting and salute
 func Loop() error{
 	/*
 		Logs start/finish of program, runs command loop
@@ -69,6 +80,7 @@ func Loop() error{
 	return nil
 }
 
+// Inifinite loop, runs until told by "exit" command
 func cmdLoop() (int, error){
 	/*
 		Infinite loop, displays input line, everything in loop runs each time enter key is pressed
@@ -80,23 +92,31 @@ func cmdLoop() (int, error){
 
 		cwd := filelog.GetCurrentDir()
 		cuser := filelog.GetUser()
-		fmt.Printf("%v - %v: ", color.Red + cuser + color.Reset, color.Blue + path.Base(cwd) + color.Reset)
+		fmt.Printf("%v - %v: ", color.Cyan + cuser + color.Reset, color.Blue + path.Base(cwd) + color.Reset)
 
 		input := bufio.NewReader(os.Stdin)
 		in, _ := input.ReadString('\n')
 		parsed_input := createCmdSlice(in)
 		if parsed_input[0] == "exit" {
 			return 0, nil
-		}
-		_, cerr := runCommand(parsed_input[0], parsed_input[1:])
-		if cerr != nil {
-			flog.Errormsg = cerr
-			flog.Err()
-		}
+		} else if parsed_input[0] == "help" {
+			_, helperr := helpCommand(parsed_input[1])
+			if helperr != nil {
+				flog.Errormsg = helperr
+				flog.Err()
+			}
+		} else {
+			_, cerr := runCommand(parsed_input[0], parsed_input[1:])
+			if cerr != nil {
+				flog.Errormsg = cerr
+				flog.Err()
+			}
+		}	
 	}
 	return 1, errors.New("End of loop")
 }
 
+// creates parsed slice from string 
 func createCmdSlice(cmd string) []string {
 	/*
 		Parses input from user and turns it into string slice
@@ -114,6 +134,7 @@ func createCmdSlice(cmd string) []string {
 	return commands
 }
 
+// Runs the command based on cmd string
 func runCommand(cmd string, args []string) (int, error) {
 	/*
 		Switch statement responsible for executing command in command struct
@@ -142,6 +163,32 @@ func runCommand(cmd string, args []string) (int, error) {
 			return 0, nil
 		}
 		fmt.Println("Added link")
+		return 0, nil
+	default:
+		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
+	}
+}
+
+// Prints help messages for commands
+func helpCommand(cmd string) (int, error){
+	/*
+		Switch statement responsible for printing command usage
+		Return: int representation of err or success, Error if error occurs
+
+	*/
+
+	switch cmd {
+	case "ls":
+		PrintUsage(command_struct.ls)
+		return 0, nil
+	case "pwd":
+		PrintUsage(command_struct.pwd)
+		return 0, nil
+	case "cd":
+		PrintUsage(command_struct.cd)
+		return 0, nil
+	case "cody":
+		PrintUsage(command_struct.running)
 		return 0, nil
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))

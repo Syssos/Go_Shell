@@ -5,6 +5,7 @@ import (
 	"os/user"
 	"fmt"
 	"time"
+	"github.com/Syssos/Go_Shell/color"
 )
 
 // Getting current user for messages
@@ -39,7 +40,7 @@ func (m Flog) Salute() {
 func (m Flog) Err() {
 	dt := time.Now()
 	m.Log(fmt.Sprintf("%v - %v",  dt.Format("01-02-2006 15:04:05"), m.Errormsg))
-	fmt.Println(m.Errormsg)
+	fmt.Println(color.Red + fmt.Sprintf("%v", m.Errormsg) + color.Reset)
 }
 
 // Command that opens log file and writes content to it.
