@@ -16,7 +16,7 @@ import (
 var flog filelog.Flog = filelog.F_init()
 
 // to change log file
-// flod.LogeFile = "path/to/file"
+// flog.LogeFile = "path/to/file"
 
 // Setting up commands from cmds directory
 var cd Cd_cmd = Cd_cmd{[]string{}}
