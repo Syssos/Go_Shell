@@ -45,7 +45,7 @@ type exec interface {
 func execute(e exec) {
 	err := e.Run()
 	if err != nil {
-		flog.Errormsg = errors.New(fmt.Sprintf("cmd: %v", err))
+		flog.Errormsg = errors.New(fmt.Sprintf("%v", err))
 		flog.Err()
 	}
 }
@@ -157,7 +157,7 @@ func runCommand(cmd string, args []string) (int, error) {
 		return 0, nil
 	case "site":
 		command_struct.running.Args = args
-		execute(command_struct.running)
+		execute(&command_struct.running)
 		return 0, nil
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
@@ -182,7 +182,7 @@ func helpCommand(cmd string) (int, error){
 	case "cd":
 		PrintUsage(command_struct.cd)
 		return 0, nil
-	case "cody":
+	case "site":
 		PrintUsage(command_struct.running)
 		return 0, nil
 	default:
