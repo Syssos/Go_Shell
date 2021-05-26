@@ -1,6 +1,6 @@
 # Filelog
 
-Filelog is a tool designed to quickly and easily log an incident to a file. This was original created to log any errors as well as a start/end timestime.
+Filelog is a tool designed to quickly and easily log an incident to a file. This was original created to log any errors as well as a start/end timestamp.
 
 ## Usage
 

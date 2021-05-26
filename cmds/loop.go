@@ -41,6 +41,7 @@ type commands struct {
 type exec interface {
 	Run() error
 }
+
 // responsible for running and logging errors with command
 func execute(e exec) {
 	err := e.Run()
@@ -70,6 +71,7 @@ func Loop() error{
 	// Logging when the program is starting/Printing greeting message
 	flog.Greet()
 	suc, err := cmdLoop()
+	
 	if err != nil {
 		fmt.Println(err)
 	} else if suc == 0 {
@@ -97,15 +99,19 @@ func cmdLoop() (int, error){
 		input := bufio.NewReader(os.Stdin)
 		in, _ := input.ReadString('\n')
 		parsed_input := createCmdSlice(in)
+		
 		if parsed_input[0] == "exit" {
+		
 			return 0, nil
 		} else if parsed_input[0] == "help" {
+		
 			_, helperr := helpCommand(parsed_input[1])
 			if helperr != nil {
 				flog.Errormsg = helperr
 				flog.Err()
 			}
 		} else {
+		
 			_, cerr := runCommand(parsed_input[0], parsed_input[1:])
 			if cerr != nil {
 				flog.Errormsg = cerr
@@ -113,6 +119,7 @@ func cmdLoop() (int, error){
 			}
 		}	
 	}
+
 	return 1, errors.New("End of loop")
 }
 
