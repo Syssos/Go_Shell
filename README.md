@@ -1,6 +1,9 @@
 # Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
 
-<img align="center" src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png" alt="Go Shell img">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png" alt="Go Shell img"/>
+</p>
+
 <!-- ![Go Shell img](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png) -->
 
 Go Shell is an interactive shell, aimed at automating tasks often used for creating, or testing web based applications or programs. Simple linux commands are included to help navigate through directories.
