@@ -16,7 +16,7 @@ All of the packages used in this repository were designed with external usablili
 
 These instructions are for targeted towards linux user's.
 
-To start things off this will require some knowledge of working with Go modules, and packages. As well as how to build and install programs. If you have any questions about Go or how to do these things I just so happen to have a repository [here](https://github.com/Syssos/Learning_Go) I created as I learned Go, leaving notes behind that may be useful to you.
+To start things off this will require some knowledge of working with Go modules, and packages. As well as how to build and install programs. If you have any questions about Go or how to do these things I just so happen to have a repository, [here](https://github.com/Syssos/Learning_Go), I created as I learned Go, leaving notes behind that may be useful to you.
 
 To get the files we need clone the package to a location you can use.
 
@@ -27,14 +27,7 @@ Once the repository is cloned cd into it.
 ```
 cd Go_Shell
 ```
-Before we continue I need to note there is no go.mod file included in this repository so one will need to be created. The command I used to create my module is below.
-
-```
-go mod init github.com/Syssos/Go_Shell
-```
-If this is not the module you choose you will need to either run the ``` go get ``` command for the packages included, or change the import statement in the nested packages.
-
-Once the go.mod file is created we can install it.
+When inside of the Go_Shell directory we should be able to install and build the program with no issues thanks to the help of [travis](#travis).
 
 ```
 go install .
@@ -42,12 +35,11 @@ go install .
 
 This will place a bin file in "$PATH/bin" called "Go_Shell", if the module name was used above. Running this command will give you the Go Shell.
 
-For me this looks like
-
+For me that location is
 ```
 ~/go/bin/Go_Shell
 ```
-Alternativly you can install the "cmds" package with ``` go get ``` and create a script that utilizes the Loop function much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
+Alternativly you can install the "cmds" package with ``` go get ``` and create a script that utilizes the cmds, and filelog packages much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
 ## Usage
 <p align="center">
@@ -55,7 +47,9 @@ Alternativly you can install the "cmds" package with ``` go get ``` and create a
 </p>
 
 ### help
-The help command is designed to work with every command the loop has access to. Each command has a Usage() method which is called when help is ran. To use this feature use the command help followed by the command you need help with.
+The help command is designed to work with every command the loop has access to. 
+
+Each command has a Usage() method which is called when help is ran. To use this feature use the command help followed by the command you need help with.
 
 ```
 $ help ls
@@ -76,7 +70,7 @@ This command should work just about the same as it does an a native linux system
 ```
 $ ls
 $ ls ../
-$ ls /Go_Shell
+$ ls Go_Shell/
 ```
 ### pwd
 This command will print the working directory. Its a pretty straight forward command and doesn't take arguments.
@@ -98,7 +92,9 @@ The commands under this section will be related to http request based commands.
 
 ### site
 
-The site command is a command that allows for the user to see a status code for a specific url. The purpose of this is mainly as a check to ensure the web application or program we are working with is returning an "OK" status.
+The site command is a command that allows for the user to see a status code for a specific url. 
+
+The purpose of this is mainly as a check to ensure the web application or program we are working with is returning an "OK" status.
 
 ```
 $ site https://github.com/Syssos/Go_Shell
@@ -117,13 +113,15 @@ the output for both of these commands should be
 
 
 ## Logging
-Example help in [settings/example_log.txt](https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt)
+Example held in [settings/example_log.txt](https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Error_Log_Example.PNG" alt="Go Shell img"/>
 </p>
 
-This program will log errors to a file called "GoShellLogfile.txt". Due to the state of this shell the logging file location is undecided, for know the shell will live int the ```/tmp``` directory. Be aware that this file location may change in future version as there could be a need for it in a new location to better suit personal use cases.
+This program utilizes toml formated data saved in a ".toml" file known as [settings/cmds.toml](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml).
+
+Be aware that this file location may change in future version as there could be a need for it in a new location to better suit personal use cases.
 
 
 ## Travis
