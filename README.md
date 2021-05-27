@@ -1,11 +1,14 @@
 # Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
 
-![Go Shell img](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png)
+<div style="text-align:center" alt="Go Shell img"><img src=".https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png" /></div>
+<!-- ![Go Shell img](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png) -->
 
-This is a simple shell built in go designed to give you basic functionality such as changing directories or listing files. This is intended to be used in future projects, if need arise for a shell. Over time this shell will develop to account for tasks I use often such as running nmap scans or sorting/refining output files.
+Go Shell is an interactive shell, aimed at automating tasks often used for creating, or testing web based applications or programs. Simple linux commands are included to help navigate through directories.
 
+### Dependancies for package:
 
-![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG)
+	- [Go](https://golang.org/)
+	- TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
 
 ## Install
 
@@ -47,8 +50,23 @@ For me this looks like
 Alternativly you can install the "cmds" package with ``` go get ``` and create a script that utilizes the Loop function much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
 ## Usage
+![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG)
 
-There are currently 3 working commands and no help system set up yet. I aplogize, but becuase this project is actively being worked on there should be self help system soon. To make up for the lack of self help below I will list the commands and how to utilize them
+### help
+The help command is designed to work with every command the loop has access to. Each command has a Usage() method which is called when help is ran. To use this feature use the command help followed by the command you need help with.
+
+```
+$ help ls
+```
+
+### exit
+This exits the shell properly and allows for logging of the user quiting.
+
+```
+$ exit
+```
+
+## Basic Commads
 
 ### ls
 This command should work just about the same as it does an a native linux system, minus advanced functionality. While it takes a location to list it cannot except flags at the moment.
@@ -71,15 +89,30 @@ This command changes the working directory much like cd in linux, like ls this w
 $ cd ../
 $ cd Go_Shell/
 ```
-### exit
-This exits the shell properly and allows for logging of the user quiting.
+
+## Website Oriented Commands
+
+The commands under this section will be related to http request based commands.
+
+### site
+
+The site command is a command that allows for the user to see a status code for a specific url. The purpose of this is mainly as a check to ensure the web application or program we are working with is returning an "OK" status.
 
 ```
-$ exit
+$ site https://github.com/Syssos/Go_Shell
 ```
-## Main.go
 
-This file will call the Loop function from the cmds package. This loop is what is responsible for all of the commands. The plans to re-use this code mean I need all of the code in one package, more or less, that I can grab and use in another project.
+After the a url is entered the site command will "remember" the url, if at any point in that shell instance you want the status of that site, the word status can be used to indicate it.
+
+```
+$ site status
+```
+the output for both of these commands should be
+
+```
+200 - Site https://github.com/Syssos/Go_Shell is active
+```
+
 
 ## Logging
 
