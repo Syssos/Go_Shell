@@ -1,0 +1,5 @@
+
+[Logger]
+Greeting="Hello there, welcome to the Go Shell"
+Salute="Later homeboy"
+LogFile="/tmp/GoShellLogfile.txt"

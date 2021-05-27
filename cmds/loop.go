@@ -13,7 +13,7 @@ import (
 
 
 // Setting up logging
-var flog filelog.Flog = filelog.F_init()
+// var Flog filelog.Flog = filelog.F_init()
 
 // Commands struct will be a "list" of commands shell can run
 type Commands struct {
@@ -23,10 +23,11 @@ type Commands struct {
 	Site Site_cmd
 }
 
+// Structure for Loop, Responsible for keeping track of commands and logger
 type Loop struct {
 	Command_struct Commands
+	Flog filelog.Flog
 }
-
 
 // Start of command line process, responsible for greeting and salute
 func (l *Loop) Run() error{
@@ -36,14 +37,14 @@ func (l *Loop) Run() error{
 	*/
 
 	// Logging when the program is starting/Printing greeting message
-	flog.Greet()
+	l.Flog.Greet()
 	suc, err := l.cmdLoop()
 	
 	if err != nil {
 		fmt.Println(err)
 	} else if suc == 0 {
 		// Logging when the user ends the program (only works with "exit")
-		flog.Salute()
+		l.Flog.Salute()
 	}
 
 	return nil
@@ -74,15 +75,15 @@ func (l *Loop)cmdLoop() (int, error){
 		
 			_, helperr := l.helpCommand(parsed_input[1])
 			if helperr != nil {
-				flog.Errormsg = helperr
-				flog.Err()
+				l.Flog.Errormsg = helperr
+				l.Flog.Err()
 			}
 		} else {
 		
 			_, cerr := l.runCommand(parsed_input[0], parsed_input[1:])
 			if cerr != nil {
-				flog.Errormsg = cerr
-				flog.Err()
+				l.Flog.Errormsg = cerr
+				l.Flog.Err()
 			}
 		}	
 	}
@@ -101,19 +102,23 @@ func (l *Loop) runCommand(cmd string, args []string) (int, error) {
 	switch cmd {
 	case "ls":
 		l.Command_struct.Ls.Args = args
-		execute(l.Command_struct.Ls)
+		lsErr := execute(l.Command_struct.Ls)
+		l.hasError(lsErr)
 		return 0, nil
 	case "pwd":
 		l.Command_struct.Pwd.Args = args
-		execute(l.Command_struct.Pwd)
+		pwdErr := execute(l.Command_struct.Pwd)
+		l.hasError(pwdErr)
 		return 0, nil
 	case "cd":
 		l.Command_struct.Cd.Args = args
-		execute(l.Command_struct.Cd)
+		cdErr := execute(l.Command_struct.Cd)
+		l.hasError(cdErr)
 		return 0, nil
 	case "site":
 		l.Command_struct.Site.Args = args
-		execute(&l.Command_struct.Site)
+		siteErr := execute(&l.Command_struct.Site)
+		l.hasError(siteErr)
 		return 0, nil
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
@@ -146,6 +151,12 @@ func (l *Loop)helpCommand(cmd string) (int, error){
 	}
 }
 
+func (l *Loop) hasError(err error) {
+	if err != nil {
+		l.Flog.Errormsg = err
+		l.Flog.Err()	
+	}
+}
 
 // used to execute every command in command struct
 type exec interface {
@@ -153,12 +164,12 @@ type exec interface {
 }
 
 // responsible for site and logging errors with command
-func execute(e exec) {
+func execute(e exec) error {
 	err := e.Run()
 	if err != nil {
-		flog.Errormsg = errors.New(fmt.Sprintf("%v", err))
-		flog.Err()
+		return errors.New(fmt.Sprintf("%v", err))
 	}
+	return nil
 }
 
 // Interface used to print usage for command

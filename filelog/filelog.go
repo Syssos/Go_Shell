@@ -8,14 +8,6 @@ import (
 	"github.com/Syssos/Go_Shell/color"
 )
 
-// Getting current user for messages
-var current_user string = GetUser()
-
-// Creating messages to display to the user
-var greetingMessage string = fmt.Sprintf("Hello there, General %v. Welcome to the Go Shell", current_user)
-var saluteMessage string = "Later homeboy"
-var logfile string = "/tmp/GoShellLogfile.txt"
-
 // Flog structure to keep track of needed material
 type Flog struct {
 	Greeting, Salutation, LogFile string
@@ -25,14 +17,14 @@ type Flog struct {
 // Prints greeting message and logs when the shell instance was started
 func (m Flog) Greet() {
 	dt := time.Now()
-	m.Log(fmt.Sprintf("%v - User %v started instance",  dt.Format("01-02-2006 15:04:05"), current_user))
+	m.Log(fmt.Sprintf("%v - User %v started instance",  dt.Format("01-02-2006 15:04:05"), GetUser()))
 	fmt.Println(m.Greeting, "\n")
 }
 
 // Prints salute message and logs when the shell instance is closed
 func (m Flog) Salute() {
 	dt := time.Now()
-	m.Log(fmt.Sprintf("%v - User %v exited instance",  dt.Format("01-02-2006 15:04:05"), current_user))
+	m.Log(fmt.Sprintf("%v - User %v exited instance",  dt.Format("01-02-2006 15:04:05"), GetUser()))
 	fmt.Println(m.Salutation)
 }
 
@@ -60,17 +52,6 @@ func GetUser() string{
 		fmt.Println(err)
 	}
 	return use.Name
-}
-
-// Creates instance of Flog to use in code, multiple Flog instances can be used to log to multiple files
-func F_init() Flog {
-	var mes Flog = Flog{
-		greetingMessage, 
-		saluteMessage, 
-		logfile,
-		nil,
-	}
-	return mes
 }
 
 // Gets the current user direectory 
