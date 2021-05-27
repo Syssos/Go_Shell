@@ -1,11 +1,11 @@
 # Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
 
-![Go Shell img](https://raw.githubusercontent.com/Syssos/Go_Shell/main/images/Go_Shell.png)
+![Go Shell img](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png)
 
 This is a simple shell built in go designed to give you basic functionality such as changing directories or listing files. This is intended to be used in future projects, if need arise for a shell. Over time this shell will develop to account for tasks I use often such as running nmap scans or sorting/refining output files.
 
 
-![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/images/Shell.PNG)
+![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG)
 
 ## Install
 
@@ -85,7 +85,7 @@ This file will call the Loop function from the cmds package. This loop is what i
 
 This program will log errors to a file called "GoShellLogfile.txt". Due to the state of this shell the logging file location is undecided, for know the shell will live int the ```/tmp``` directory. Be aware that this file location may change in future version as there could be a need for it in a new location to better suit personal use cases.
 
-![Logging Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/images/Error_Log_Example.PNG)
+![Logging Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Error_Log_Example.PNG)
 
 ## Travis
 
