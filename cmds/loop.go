@@ -1,5 +1,9 @@
 /*
-	The cmds package is responsible for holding all of the basic shell commands. To add to the commands the shell has access to they will for now be part of the cmds package.
+	The cmds package is responsible for holding all of the basic shell commands. For the easiest intergration, any additional command should be created within the "cmds" package.
+	This will allow for most of the interfaces to remain working.
+
+	If commands are added, they must be in the format of a struct, with an exportable "Args" variable of type []string. This struct must also contain a Run() and Usage() method to 
+	be used	in the same manor the basic commands are used in.
 
 	The Loop will consist of 2 main components, a logger and a command struct. The command struct will be created out of structures that represent commands, this allows
 	for arguments to be passed easily and an easy command execution method. The logger used for this command loop is another structure known as Flog. These two components
