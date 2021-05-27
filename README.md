@@ -136,7 +136,9 @@ Example held in [settings/example_log.txt](https://github.com/Syssos/Go_Shell/bl
 
 This program utilizes toml formated data saved in a ".toml" file known as [settings/cmds.toml](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml).
 
-Be aware that this file location may change in future version as there could be a need for it in a new location to better suit personal use cases.
+If you are unfamiliar with the TOML format, more information can be found on their [github](https://github.com/toml-lang/toml) page.
+
+The settings in the file mentioned above are only used for the filelog package. The "Greeting" and "Salute"
 
 
 ## Travis
