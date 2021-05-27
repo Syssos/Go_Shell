@@ -1,21 +1,27 @@
+/*
+	The cmds package is responsible for holding all of the basic shell commands. To add to the commands the shell has access to they will for now be part of the cmds package.
+
+	The Loop will consist of 2 main components, a logger and a command struct. The command struct will be created out of structures that represent commands, this allows
+	for arguments to be passed easily and an easy command execution method. The logger used for this command loop is another structure known as Flog. These two components
+	components will not need to change much as the shell is running.
+*/
+
 package cmds
 
 import (
-	"github.com/Syssos/Go_Shell/color"
-	"github.com/Syssos/Go_Shell/filelog"
+	
 	"os"
 	"fmt"
-	"bufio"
 	"path"
+	"bufio"
 	"errors"
 	"strings"
+
+	"github.com/Syssos/Go_Shell/color"
+	"github.com/Syssos/Go_Shell/filelog"
 )
 
-
-// Setting up logging
-// var Flog filelog.Flog = filelog.F_init()
-
-// Commands struct will be a "list" of commands shell can run
+// Holds structures for each command loop can run for easier access
 type Commands struct {
 	
 	Ls   Ls_cmd
@@ -24,51 +30,38 @@ type Commands struct {
 	Site Site_cmd
 }
 
-// Structure for Loop, Responsible for keeping track of commands and logger
+// Responsible for keeping track of commands and logger
 type Loop struct {
 
-	Command_struct Commands
 	Flog           filelog.Flog
+	Command_struct Commands
 }
-
-// Start of command line process, responsible for greeting and salute
+// Where command loop starts, greeting and salute messages are displayed here
 func (l *Loop) Run() error{
-	/*
-		Logs start/finish of program, runs command loop
-		Return: Error if command loop ran into problems
-	*/
 
-	// Logging when the program is starting/Printing greeting message
 	l.Flog.Greet()
 	suc, err := l.cmdLoop()
-	
 	if err != nil {
-		
+
 		l.Flog.Errormsg = err
 		l.Flog.Err()
 
 	} else if suc == 0 {
 		
-		// Logging when the user ends the program (only works with "exit")
 		l.Flog.Salute()
 	}
 
 	return nil
 }
-
 // Inifinite loop, runs until told by "exit" command
 func (l *Loop)cmdLoop() (int, error){
-	/*
-		Infinite loop, displays input line, everything in loop runs each time enter key is pressed
-		Return: Int representation of success or failure, error if error occurs
-
-	*/
 
 	for ;; {
 
 		cwd   := filelog.GetCurrentDir()
 		cuser := filelog.GetUser()
 		
+		// Printing what user see's before their input on command line
 		fmt.Printf("%v - %v: ", color.Cyan + cuser + color.Reset, color.Blue + path.Base(cwd) + color.Reset)
 
 		input := bufio.NewReader(os.Stdin)
@@ -76,38 +69,42 @@ func (l *Loop)cmdLoop() (int, error){
 		
 		parsed_input := createCmdSlice(in)
 		
-		if parsed_input[0] == "exit" {
-		
-			return 0, nil
-
-		} else if parsed_input[0] == "help" {
-		
-			_, helperr := l.helpCommand(parsed_input[1])
-			if helperr != nil {
-				l.Flog.Errormsg = helperr
-				l.Flog.Err()
-			}
+		if len(parsed_input) > 0 {
+			if parsed_input[0] == "exit" {
 			
+				return 0, nil
+
+			} else if parsed_input[0] == "help" {
+			
+				if len(parsed_input) > 1 {
+					_, helpErr := l.helpCommand(parsed_input[1])
+					if helpErr != nil {
+						l.Flog.Errormsg = helpErr
+						l.Flog.Err()
+					}
+				} else {
+
+					l.Flog.Errormsg = errors.New("No command specified to help with")
+					l.Flog.Err()
+				}
+				
+			} else {
+			
+				_, cerr := l.runCommand(parsed_input[0], parsed_input[1:])
+				if cerr != nil {
+					l.Flog.Errormsg = cerr
+					l.Flog.Err()
+				}
+			}	
 		} else {
-		
-			_, cerr := l.runCommand(parsed_input[0], parsed_input[1:])
-			if cerr != nil {
-				l.Flog.Errormsg = cerr
-				l.Flog.Err()
-			}
-		}	
+			// Blank input was passed, restarting loop to collect input
+		}
 	}
 
 	return 1, errors.New("End of loop")
 }
-
 // Runs the command based on cmd string
 func (l *Loop) runCommand(cmd string, args []string) (int, error) {
-	/*
-		Switch statement responsible for executing command in command struct
-		Return: int representation of err or success, Error if error occurs
-
-	*/
 
 	switch cmd {
 
@@ -139,14 +136,8 @@ func (l *Loop) runCommand(cmd string, args []string) (int, error) {
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
 	}
 }
-
 // Prints help messages for commands
 func (l *Loop)helpCommand(cmd string) (int, error){
-	/*
-		Switch statement responsible for printing command usage
-		Return: int representation of err or success, Error if error occurs
-
-	*/
 
 	switch cmd {
 
@@ -171,7 +162,7 @@ func (l *Loop)helpCommand(cmd string) (int, error){
 
 	}
 }
-
+// Used to check for errors in runCommand
 func (l *Loop) hasError(err error) {
 
 	if err != nil {
@@ -185,7 +176,7 @@ type info interface {
 	Usage()
 }
 
-// Function that prints usage
+// Function that prints usage, utilizes info
 func PrintUsage(i info) {
 	i.Usage()
 }
@@ -205,13 +196,8 @@ func execute(e exec) error {
 	return nil
 }
 
-// creates parsed slice from string 
+// creates parsed slice from string based off spaces
 func createCmdSlice(cmd string) []string {
-	/*
-		Parses input from user and turns it into string slice
-		Return: returns string slice of commands and flags
-
-	*/
 
 	commands := []string{}
 

@@ -8,14 +8,13 @@ import (
 	"io/ioutil"
 	"encoding/json"
 
+	"github.com/komkom/toml"
 	"github.com/Syssos/Go_Shell/cmds"
 	"github.com/Syssos/Go_Shell/filelog"
-	"github.com/komkom/toml"
 )
-
+// Creates filelog.Flog and cmds.Loop instance, then runs Loop for command line interpretor
 func main() {
 	
-	// Setting up commands from cmds directory
 	cd   := cmds.Cd_cmd{[]string{}}
 	pwd  := cmds.Pwd_cmd{[]string{}}
 	ls   := cmds.Ls_cmd{[]string{}}
@@ -23,8 +22,10 @@ func main() {
 
 	command_struct := cmds.Commands{ls, pwd, cd, site}
 	
+	// Creating Flog instance from settings/cmds.toml
 	flog := LoggerFromFile()
-	loop := cmds.Loop{command_struct, flog}
+
+	loop := cmds.Loop{flog, command_struct}
 
 	loopErr := loop.Run()
 	if loopErr != nil{
@@ -33,6 +34,7 @@ func main() {
 	}
 }
 
+// Generating Flog instance from settings retrieved from file
 func LoggerFromFile() filelog.Flog {
 
 	file, openErr := ioutil.ReadFile("settings/cmds.toml")
@@ -41,6 +43,7 @@ func LoggerFromFile() filelog.Flog {
 	}
 
 	doc := string(file)
+	// Decodes toml to *json.Decoder
 	dec := json.NewDecoder(toml.New(bytes.NewBufferString(doc)))
 	
 	st  := struct {
@@ -60,6 +63,7 @@ func LoggerFromFile() filelog.Flog {
 	  panic(err)
 	}
 
+	// Setting the error logs timestamp, timezone
 	location := time.FixedZone(st.Logger.DtTimeZone, st.Logger.DtOffset*60*60)
 	
 	flog := filelog.Flog{ st.Logger.Greeting, st.Logger.Salute, st.Logger.LogFile, st.Logger.DtFormat, location, nil}

@@ -1,6 +1,17 @@
+/*
+	Filelog is a package dedicated to logging files to a specific output file.
+
+	The Flog struct is what gives a developer the ability to utilize this package, Multiple instances of this package can be created and used to log different insidents
+	for different cases.
+
+	As the cmds package is developed this pacackage will be used increasingly more. The ability to log command specific errors, to an appropriate log file, will become
+	 more of a neccesicity
+*/
+
 package filelog
 
 import (
+	
 	"os"
 	"fmt"
 	"time"
