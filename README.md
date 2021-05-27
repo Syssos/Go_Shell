@@ -16,7 +16,13 @@ Go Shell is an interactive shell, aimed at automating tasks often used for creat
 - [Install](#install)
 - [Usage](#usage)
   * [Core Commands](#core-commands)
-  * [Site Commands](#site-commands)
+    - [help](#help)
+    - [exit](#exit)
+    - [ls](#ls)
+    - [pwd](#pwd)
+    - [cd](#cd)
+  * [Website Oriented Commands](#website-oriented-commands)
+    - [site](#site)
 - [Logging](#logging)
 - [Travis](#travis)
 
@@ -56,10 +62,12 @@ Alternativly you can install the "cmds" package with ``` go get ``` and create a
   <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG" alt="Go Shell img"/>
 </p>
 
-### Core Commads
-The help command is designed to work with every command the loop has access to. 
+### Core Commands
 
 Each command has a Usage() method which is called when help is ran. To use this feature use the command help followed by the command you need help with.
+
+### help
+The help command is designed to work with every command the loop has access to. 
 
 ```
 $ help ls
