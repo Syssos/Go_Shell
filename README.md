@@ -10,6 +10,16 @@ Go Shell is an interactive shell, aimed at automating tasks often used for creat
 - [Go](https://golang.org/)
 - TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
 
+## Table of Contents
+- [Overview](#go-shell)
+- [Table of Contents](#table-of-contents)
+- [Install](#install)
+- [Usage](#usage)
+  * [Core Commands](#core-commands)
+  * [Site Commands](#site-commands)
+- [Logging](#logging)
+- [Travis](#travis)
+
 ## Install
 
 All of the packages used in this repository were designed with external usablility in mind. Each package directory will contain a readme with all of the information you'll need to get started. The directions below should get you started with using the shell as.
@@ -46,7 +56,7 @@ Alternativly you can install the "cmds" package with ``` go get ``` and create a
   <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG" alt="Go Shell img"/>
 </p>
 
-### help
+### Core Commads
 The help command is designed to work with every command the loop has access to. 
 
 Each command has a Usage() method which is called when help is ran. To use this feature use the command help followed by the command you need help with.
@@ -61,9 +71,6 @@ This exits the shell properly and allows for logging of the user quiting.
 ```
 $ exit
 ```
-
-## Basic Commads
-
 ### ls
 This command should work just about the same as it does an a native linux system, minus advanced functionality. While it takes a location to list it cannot except flags at the moment.
 
