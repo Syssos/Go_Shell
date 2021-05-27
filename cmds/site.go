@@ -16,11 +16,10 @@ import (
 
 // Struct for keeping track of the site command data while program is running
 type Site_cmd struct {
-	Args []string
-	Link string
+	Args   []string
+	Link   string
 	Active bool
 }
-
 // Method for handling the "site" command call from "cmds/loop.go"
 func (cmd *Site_cmd) Run() error{
 
@@ -49,7 +48,6 @@ func (cmd *Site_cmd) Run() error{
 	
 	return nil
 }
-
 // Prints usage of "site" command
 func (cmd Site_cmd) Usage() {
 
@@ -57,7 +55,6 @@ func (cmd Site_cmd) Usage() {
 	colorfied := usagestr
 	fmt.Println(colorfied)
 }
-
 // Fucntion used for checking the 
 func (cmd *Site_cmd) Status() error {
 

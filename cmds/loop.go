@@ -18,9 +18,9 @@ import (
 // Commands struct will be a "list" of commands shell can run
 type Commands struct {
 	
-	Ls Ls_cmd
-	Pwd Pwd_cmd
-	Cd Cd_cmd
+	Ls   Ls_cmd
+	Pwd  Pwd_cmd
+	Cd   Cd_cmd
 	Site Site_cmd
 }
 
@@ -28,7 +28,7 @@ type Commands struct {
 type Loop struct {
 
 	Command_struct Commands
-	Flog filelog.Flog
+	Flog           filelog.Flog
 }
 
 // Start of command line process, responsible for greeting and salute
@@ -43,8 +43,12 @@ func (l *Loop) Run() error{
 	suc, err := l.cmdLoop()
 	
 	if err != nil {
-		fmt.Println(err)
+		
+		l.Flog.Errormsg = err
+		l.Flog.Err()
+
 	} else if suc == 0 {
+		
 		// Logging when the user ends the program (only works with "exit")
 		l.Flog.Salute()
 	}
@@ -62,17 +66,20 @@ func (l *Loop)cmdLoop() (int, error){
 
 	for ;; {
 
-		cwd := filelog.GetCurrentDir()
+		cwd   := filelog.GetCurrentDir()
 		cuser := filelog.GetUser()
+		
 		fmt.Printf("%v - %v: ", color.Cyan + cuser + color.Reset, color.Blue + path.Base(cwd) + color.Reset)
 
 		input := bufio.NewReader(os.Stdin)
 		in, _ := input.ReadString('\n')
+		
 		parsed_input := createCmdSlice(in)
 		
 		if parsed_input[0] == "exit" {
 		
 			return 0, nil
+
 		} else if parsed_input[0] == "help" {
 		
 			_, helperr := l.helpCommand(parsed_input[1])
@@ -80,6 +87,7 @@ func (l *Loop)cmdLoop() (int, error){
 				l.Flog.Errormsg = helperr
 				l.Flog.Err()
 			}
+			
 		} else {
 		
 			_, cerr := l.runCommand(parsed_input[0], parsed_input[1:])
@@ -172,6 +180,16 @@ func (l *Loop) hasError(err error) {
 	}
 }
 
+// Interface used to print usage for command
+type info interface {
+	Usage()
+}
+
+// Function that prints usage
+func PrintUsage(i info) {
+	i.Usage()
+}
+
 // used to execute every command in command struct
 type exec interface {
 	Run() error
@@ -185,16 +203,6 @@ func execute(e exec) error {
 		return errors.New(fmt.Sprintf("%v", err))
 	}
 	return nil
-}
-
-// Interface used to print usage for command
-type info interface {
-	Usage()
-}
-
-// Function that prints usage
-func PrintUsage(i info) {
-	i.Usage()
 }
 
 // creates parsed slice from string 

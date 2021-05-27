@@ -8,22 +8,20 @@ import (
 	"github.com/Syssos/Go_Shell/color"
 )
 
+
 // Creating struct for cd command
 type Cd_cmd struct {
 	Args []string
 }
-
 // method to run the command
 func (cmd Cd_cmd) Run() error {
 	
 	if len(cmd.Args) == 0 {
     	return errors.New("empty string passed to cd")
 	}
-	
 	os.Chdir(cmd.Args[0])
     return nil
 }
-
 // method for printing cd command usage
 func (cmd Cd_cmd) Usage() {
 	
@@ -32,11 +30,11 @@ func (cmd Cd_cmd) Usage() {
 	fmt.Println(colorfied)
 }
 
+
 // Command structure for pwd command
 type Pwd_cmd struct {
 	Args []string
 }
-
 // method that runs the command
 func (cmd Pwd_cmd) Run() error {
 	
@@ -53,7 +51,6 @@ func (cmd Pwd_cmd) Run() error {
 	fmt.Println(color.Green + cwd + color.Reset)
 	return nil
 }
-
 // method for printing pwd command usage
 func (cmd Pwd_cmd) Usage() {
 	
@@ -62,11 +59,11 @@ func (cmd Pwd_cmd) Usage() {
 	fmt.Println(colorfied)
 }
 
+
 // Creating struct for ls command
 type Ls_cmd struct {
 	Args []string
 }
-
 // Method to run the ls command
 func (cmd Ls_cmd) Run() error {
 
@@ -101,7 +98,6 @@ func (cmd Ls_cmd) Run() error {
 	printFiles(files)
 	return nil
 }
-
 // method for printing ls command usage
 func (cmd Ls_cmd) Usage() {
 	

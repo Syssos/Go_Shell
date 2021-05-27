@@ -2,40 +2,51 @@ package filelog
 
 import (
 	"os"
-	"os/user"
 	"fmt"
 	"time"
+	"os/user"
+
 	"github.com/Syssos/Go_Shell/color"
 )
 
 // Flog structure to keep track of needed material
 type Flog struct {
 
-	Greeting, Salutation, LogFile string
-	Errormsg error
+	Greeting    string
+	Salutation  string
+	LogFile     string
+	DtFormat    string
+	DtLocation  *time.Location
+	Errormsg    error
 }
 
 // Prints greeting message and logs when the shell instance was started
 func (m Flog) Greet() {
+	
+	dt := time.Now().In(m.DtLocation)
 
-	dt := time.Now()
-	m.Log(fmt.Sprintf("%v - User %v started instance",  dt.Format("01-02-2006 15:04:05"), GetUser()))
+	m.Log(fmt.Sprintf("%v - User %v started instance",  dt.Format(m.DtFormat), GetUser()))
+
 	fmt.Println(m.Greeting, "\n")
 }
 
 // Prints salute message and logs when the shell instance is closed
 func (m Flog) Salute() {
 
-	dt := time.Now()
-	m.Log(fmt.Sprintf("%v - User %v exited instance",  dt.Format("01-02-2006 15:04:05"), GetUser()))
+	dt := time.Now().In(m.DtLocation)
+
+	m.Log(fmt.Sprintf("%v - User %v exited instance",  dt.Format(m.DtFormat), GetUser()))
+
 	fmt.Println(m.Salutation)
 }
 
 // Prints error message and logs it
 func (m Flog) Err() {
 
-	dt := time.Now()
-	m.Log(fmt.Sprintf("%v - %v",  dt.Format("01-02-2006 15:04:05"), m.Errormsg))
+	dt := time.Now().In(m.DtLocation)
+
+	m.Log(fmt.Sprintf("%v - %v",  dt.Format(m.DtFormat), m.Errormsg))
+
 	fmt.Println(color.Red + fmt.Sprintf("%v", m.Errormsg) + color.Reset)
 }
 
@@ -58,6 +69,7 @@ func GetUser() string{
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	return use.Name
 }
 
@@ -79,5 +91,6 @@ func GetCurrentDir() string{
 	if err != nil {
 		fmt.Println(err)
 	}
+	
 	return cwd
 }
