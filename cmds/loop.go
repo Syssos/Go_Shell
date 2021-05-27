@@ -17,6 +17,7 @@ import (
 
 // Commands struct will be a "list" of commands shell can run
 type Commands struct {
+	
 	Ls Ls_cmd
 	Pwd Pwd_cmd
 	Cd Cd_cmd
@@ -25,6 +26,7 @@ type Commands struct {
 
 // Structure for Loop, Responsible for keeping track of commands and logger
 type Loop struct {
+
 	Command_struct Commands
 	Flog filelog.Flog
 }
@@ -100,26 +102,31 @@ func (l *Loop) runCommand(cmd string, args []string) (int, error) {
 	*/
 
 	switch cmd {
+
 	case "ls":
 		l.Command_struct.Ls.Args = args
 		lsErr := execute(l.Command_struct.Ls)
 		l.hasError(lsErr)
 		return 0, nil
+
 	case "pwd":
 		l.Command_struct.Pwd.Args = args
 		pwdErr := execute(l.Command_struct.Pwd)
 		l.hasError(pwdErr)
 		return 0, nil
+
 	case "cd":
 		l.Command_struct.Cd.Args = args
 		cdErr := execute(l.Command_struct.Cd)
 		l.hasError(cdErr)
 		return 0, nil
+
 	case "site":
 		l.Command_struct.Site.Args = args
 		siteErr := execute(&l.Command_struct.Site)
 		l.hasError(siteErr)
 		return 0, nil
+
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
 	}
@@ -134,24 +141,31 @@ func (l *Loop)helpCommand(cmd string) (int, error){
 	*/
 
 	switch cmd {
+
 	case "ls":
 		PrintUsage(l.Command_struct.Ls)
 		return 0, nil
+
 	case "pwd":
 		PrintUsage(l.Command_struct.Pwd)
 		return 0, nil
+
 	case "cd":
 		PrintUsage(l.Command_struct.Cd)
 		return 0, nil
+
 	case "site":
 		PrintUsage(l.Command_struct.Site)
 		return 0, nil
+
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
+
 	}
 }
 
 func (l *Loop) hasError(err error) {
+
 	if err != nil {
 		l.Flog.Errormsg = err
 		l.Flog.Err()	
@@ -165,6 +179,7 @@ type exec interface {
 
 // responsible for site and logging errors with command
 func execute(e exec) error {
+
 	err := e.Run()
 	if err != nil {
 		return errors.New(fmt.Sprintf("%v", err))

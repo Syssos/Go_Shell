@@ -32,15 +32,14 @@ func main() {
 }
 
 func LoggerFromFile() filelog.Flog {
+
 	file, openErr := ioutil.ReadFile("settings/cmds.toml")
 	if openErr != nil {
 		fmt.Println(openErr)
 	}
 
 	doc := string(file)
-
 	dec := json.NewDecoder(toml.New(bytes.NewBufferString(doc)))
-
 	st := struct {
 	  Logger struct {
 	    Greeting string `json: "Greeting"`
