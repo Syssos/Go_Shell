@@ -4,14 +4,11 @@
   <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png" alt="Go Shell img"/>
 </p>
 
-<!-- ![Go Shell img](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png) -->
-
 Go Shell is an interactive shell, aimed at automating tasks often used for creating, or testing web based applications or programs. Simple linux commands are included to help navigate through directories.
 
 ### Dependancies for package:
-
-	- [Go](https://golang.org/)
-	- TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
+- [Go](https://golang.org/)
+- TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
 
 ## Install
 
@@ -53,7 +50,9 @@ For me this looks like
 Alternativly you can install the "cmds" package with ``` go get ``` and create a script that utilizes the Loop function much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
 ## Usage
-![Go Shell Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG)
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG" alt="Go Shell img"/>
+</p>
 
 ### help
 The help command is designed to work with every command the loop has access to. Each command has a Usage() method which is called when help is ran. To use this feature use the command help followed by the command you need help with.
@@ -118,10 +117,14 @@ the output for both of these commands should be
 
 
 ## Logging
+Example help in [settings/example_log.txt](https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Error_Log_Example.PNG" alt="Go Shell img"/>
+</p>
 
 This program will log errors to a file called "GoShellLogfile.txt". Due to the state of this shell the logging file location is undecided, for know the shell will live int the ```/tmp``` directory. Be aware that this file location may change in future version as there could be a need for it in a new location to better suit personal use cases.
 
-![Logging Example](https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Error_Log_Example.PNG)
 
 ## Travis
 
