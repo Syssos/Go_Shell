@@ -6,7 +6,7 @@
 
 Go Shell is an interactive shell, aimed at automating tasks often used for creating, or testing web based applications. 
 
-### Dependancies for package:
+### Dependancies for module:
 - [Go](https://golang.org/)
 - TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
 - HTTP request multiplexer ([gorilla/mux](https://github.com/gorilla/mux))
