@@ -4,11 +4,13 @@
   <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png" alt="Go Shell img"/>
 </p>
 
-Go Shell is an interactive shell, aimed at automating tasks often used for creating, or testing web based applications or programs. Simple linux commands are included to help navigate through directories.
+Go Shell is an interactive shell, aimed at automating tasks often used for creating, or testing web based applications. 
 
 ### Dependancies for package:
 - [Go](https://golang.org/)
 - TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
+
+Simple linux commands are included to help navigate through directories.
 
 ## Table of Contents
 - [Overview](#go-shell)
@@ -39,23 +41,27 @@ To get the files we need clone the package to a location you can use.
 ``` 
 git clone https://github.com/Syssos/Go_Shell.git
 ```
-Once the repository is cloned cd into it.
+Once the repository is cloned cd into it. 
+
+When inside of the Go_Shell directory we should be able to install and build the program with no issues.
 ```
 cd Go_Shell
 ```
-When inside of the Go_Shell directory we should be able to install and build the program with no issues thanks to the help of [travis](#travis).
+Thanks to the help of [travis](#travis) we should see that the package is in working condition. 
+
+Installing the shell will cause ```go get``` to grab any accociated packages and install them in the ```$GOPATH/src``` folder.
 
 ```
 go install .
 ```
 
-This will place a bin file in "$PATH/bin" called "Go_Shell", if the module name was used above. Running this command will give you the Go Shell.
+This will place a compiled binary file in "$PATH/bin" called "Go_Shell". Running this command will give you the Go Shell.
 
-For me that location is
+For me that looks something like
 ```
 ~/go/bin/Go_Shell
 ```
-Alternativly you can install the "cmds" package with ``` go get ``` and create a script that utilizes the cmds, and filelog packages much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
+Alternativly you can install the "cmds" package with go get and create a script that utilizes the cmds, and filelog packages much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
 ## Usage
 <p align="center">
@@ -64,23 +70,23 @@ Alternativly you can install the "cmds" package with ``` go get ``` and create a
 
 ### Core Commands
 
-Each command has a Usage() method which is called when help is ran. To use this feature use the command help followed by the command you need help with.
+Each command structure has a Usage() method which is called when the "help" command is ran. To use this feature, enter ```help``` followed by the command you need help with.
 
-### help
-The help command is designed to work with every command the loop has access to. 
+### Help
+The help command is designed to work with every command the loop is able to run.
 
 ```
 $ help ls
 ```
 
-### exit
+### Exit
 This exits the shell properly and allows for logging of the user quiting.
 
 ```
 $ exit
 ```
 ### ls
-This command should work just about the same as it does an a native linux system, minus advanced functionality. While it takes a location to list it cannot except flags at the moment.
+This command should work just about the same as it does an a native linux system, minus flag functionality. While it takes a location to list it cannot except other flags at the moment.
 
 ```
 $ ls
@@ -128,17 +134,17 @@ the output for both of these commands should be
 
 
 ## Logging
-Example held in [settings/example_log.txt](https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt)
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Error_Log_Example.PNG" alt="Go Shell img"/>
 </p>
 
-This program utilizes toml formated data saved in a ".toml" file known as [settings/cmds.toml](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml).
+Example held in [settings/example_log.txt](https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt)
+
+This program utilizes toml formated data saved in a [.toml](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml).
 
 If you are unfamiliar with the TOML format, more information can be found on their [github](https://github.com/toml-lang/toml) page.
 
-The settings in the file mentioned above are only used for the filelog package. The "Greeting" and "Salute"
+The settings in the file mentioned above are only used for the filelog package. The "Greeting" and "Salute" variables are likely to get removed for lack of relevance to the logger. Other settings refer to datatime settings and location settings.
 
 
 ## Travis
