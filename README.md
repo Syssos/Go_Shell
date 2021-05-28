@@ -11,7 +11,7 @@ Go Shell is an interactive shell, aimed at automating tasks often used for creat
 - TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
 - HTTP request multiplexer ([gorilla/mux](https://github.com/gorilla/mux))
 
-Simple linux commands are included to help navigate through directories.
+While the usefulness of this package comes from the web specific commands, simple linux style commands are included to help with those commands.
 
 ## Table of Contents
 - [Overview](#go-shell)
@@ -29,6 +29,7 @@ Simple linux commands are included to help navigate through directories.
     - [hostme](#hostme)
 - [Logging](#logging)
 - [Travis](#travis)
+- [Testing](#testing)
 
 ## Install
 
@@ -159,17 +160,18 @@ This should bring us to the host html file
 ## Logging
 <p align="center">
   <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Error_Log_Example.PNG" alt="Go Shell img"/>
+  <p align="center">Example held in <a href="https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt">settings/example_log.txt</a></p>
 </p>
 
-Example held in [settings/example_log.txt](https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt)
-
-This program utilizes toml formated data saved in a [.toml](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml).
-
-If you are unfamiliar with the TOML format, more information can be found on their [github](https://github.com/toml-lang/toml) page.
-
-The settings in the file mentioned above are only used for the filelog package. The "Greeting" and "Salute" variables are likely to get removed for lack of relevance to the logger. Other settings refer to datatime settings and location settings.
-
+The logging is handled by a [Flog](https://github.com/Syssos/Go_Shell/tree/main/filelog#filelog) instance. This instance is generated with settings saved in a TOML file. To learn more about the settings file check out the [readme](https://github.com/Syssos/Go_Shell/tree/main/settings) for it
 
 ## Travis
+Travis-CI is a continuous integration repository "extention". The badge at the top of the page represents the current status of the Go Shell program. This is impo
 
-Travis-CI is a bonus feature of this repository. Due to the nature of this project the code can change at a fast pace. To prevent errors from occuring to someone who clones the repo, the travis build state is indicated at the top of this readme. I have multiple machines and need to share code between them. Travis allows me to do that and ensure the code is working at the same time.
+Due to the current state of the program changes can be major changes can be introduced at anytime. To prevent errors from occuring to someone who clones the repo, the travis build state is indicated at the top of this readme. 
+
+## Testing 
+
+As mentioned above, travis is used to ensure that the package is contnuously running. It does this based off of the result from the `pkg_test.go` file.
+
+This file will contain all of the test's needed to ensure the program is working correctly. As commands get added to the repository that are more complex in design, the use of extra _test.go files may become apparent.

@@ -27,18 +27,17 @@ Inside of the [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) fi
 
 Once the instance is created, to log a file, the Log method can be utilized.
 
-### Logging strings (Timestamp not yet supported)
+### Logging strings (no timestamp)
 
 ```go
 LogOne.Log("Message to log")
 ```
-### Logging errors (Logs with timestamp)
+### Logging errors (logs timestamp)
 
 ```go
 LogOne.Errormsg = errors.New("Error to log")
 LogOne.Err()
-``` 
-
+```
 ### Logging errors from function return
 
 ```go
@@ -48,4 +47,10 @@ if err != nil {
 	LogOne.Err()
 }
 ```
+
 The code above will log the error message to the log file as well as print the error to the screen using a Println function.
+
+## Using TOML
+The Go Shell program utilizes toml settings to configure the logger for this project.
+
+Creating the Flog instance from TOML formated data can be seeing in [`LoggerFromFile()`](https://github.com/Syssos/Go_Shell/blob/main/main.go), the settings used to configure the Flog can be found in the [`settings/cmds.toml`](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml) file.

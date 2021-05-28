@@ -1,4 +1,4 @@
-# Commands
+# cmds package
 
 This package will contain a majority, if not all of the commands utilized by the shell.
 
@@ -6,24 +6,46 @@ While this package will use a filelog.Flog instance from a [Flog](https://github
 
 ## Install
 
-To install this package use the go get command, this should also pull in the filelog package. 
+To install this package use the go get command
 
+```bash
+go get github.com/Syssos/Go_Shell/cmds
 ```
+
+This package will also require the filelog package as it is a dependancy for the loop struct. To install that package you can use go get as well.
+
+```bash
 go get github.com/Syssos/Go_Shell/filelog
 ```
 
 ## Usage
-To start using the shell, in another file, we must start by creating an instance of a [Loop](https://github.com/Syssos/Go_Shell/blob/main/cmds/loop.go). This will require a Flog instance, as well as a cmds.Commands struct instace.
+Every command in this file can be imported and ran in other projects if need be.
 
-For an example you can look at the main function, within the [main](https://github.com/Syssos/Go_Shell/blob/main/main.go) file at the root of the repo.
+This can be done by initualizing an instance of the command struct, and then calling the `Run()` method.
 
-In this example we see that we use both a Flog instance
+an example of this, using the cmds.pwd command
+
 ```go
-flog := LoggerFromFile() //filelog.Flog{}
-loop := cmds.Loop{flog, command_struct}
+package main
 
-loopErr := loop.Run()
+import (
+	"fmt"
+
+	"github.com/Syssos/Go_Shell/cmds"
+)
+
+func main () {
+	pwd_command := cmds.Pwd_cmd{[string]{}}
+	// pwd_command.Args = []string{"arguments", "command", "can", "handle"}
+
+	pwd_command.Run()
+}
 ```
-The Flog instance uses a command_struct, which is essentually a struct, of structs, and is what holds the commands the shell has access to.
 
-The loop will run until an unhandled error, or exit is triggered.
+This method should work for every command in the `cmds` package, as they are all designed to be called based off of the Run() method.
+
+Keep in mind that the `cmd.Args` value needs to be a slice of commands that are of type string. The loop is responsible for parsing, so a string line as shown below, will not work.
+
+```go
+pwd_command.Args = "arguments command can handle" //will not work, mismatched type string and []string
+```
