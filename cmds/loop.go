@@ -28,10 +28,11 @@ import (
 // Holds structures for each command loop can run for easier access
 type Commands struct {
 	
-	Ls   Ls_cmd
-	Pwd  Pwd_cmd
-	Cd   Cd_cmd
-	Site Site_cmd
+	Ls     Ls_cmd
+	Pwd    Pwd_cmd
+	Cd     Cd_cmd
+	Site   Site_cmd
+	Hostme HostMe_cmd
 }
 
 // Responsible for keeping track of commands and logger
@@ -136,6 +137,12 @@ func (l *Loop) runCommand(cmd string, args []string) (int, error) {
 		l.hasError(siteErr)
 		return 0, nil
 
+	case "hostme":
+		l.Command_struct.Hostme.Args = args
+		hostmeErr := execute(l.Command_struct.Hostme)
+		l.hasError(hostmeErr)
+		return 0, nil
+
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
 	}
@@ -159,6 +166,10 @@ func (l *Loop)helpCommand(cmd string) (int, error){
 
 	case "site":
 		PrintUsage(l.Command_struct.Site)
+		return 0, nil
+
+	case "hostme":
+		PrintUsage(l.Command_struct.Hostme)
 		return 0, nil
 
 	default:

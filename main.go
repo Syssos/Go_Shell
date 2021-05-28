@@ -15,12 +15,13 @@ import (
 // Creates filelog.Flog and cmds.Loop instance, then runs Loop for command line interpretor
 func main() {
 	
-	cd   := cmds.Cd_cmd{[]string{}}
-	pwd  := cmds.Pwd_cmd{[]string{}}
-	ls   := cmds.Ls_cmd{[]string{}}
-	site := cmds.Site_cmd{[]string{}, "", false}
+	cd     := cmds.Cd_cmd{[]string{}}
+	pwd    := cmds.Pwd_cmd{[]string{}}
+	ls     := cmds.Ls_cmd{[]string{}}
+	site   := cmds.Site_cmd{[]string{}, "", false}
+	hostme := cmds.HostMe_cmd{[]string{}}
 
-	command_struct := cmds.Commands{ls, pwd, cd, site}
+	command_struct := cmds.Commands{ls, pwd, cd, site, hostme}
 	
 	// Creating Flog instance from settings/cmds.toml
 	flog := LoggerFromFile()

@@ -9,6 +9,7 @@ Go Shell is an interactive shell, aimed at automating tasks often used for creat
 ### Dependancies for package:
 - [Go](https://golang.org/)
 - TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
+- HTTP request multiplexer ([gorilla/mux](https://github.com/gorilla/mux))
 
 Simple linux commands are included to help navigate through directories.
 
@@ -25,6 +26,7 @@ Simple linux commands are included to help navigate through directories.
     - [cd](#cd)
   * [Website Oriented Commands](#website-oriented-commands)
     - [site](#site)
+    - [hostme](#hostme)
 - [Logging](#logging)
 - [Travis](#travis)
 
@@ -132,6 +134,27 @@ the output for both of these commands should be
 200 - Site https://github.com/Syssos/Go_Shell is active
 ```
 
+### hostme
+
+The host me command will spin up a small http server to temporarily host a single html file. 
+
+To use this command, enter the command name hostme, then the name of the file you would like to host
+
+```
+$ hostme <path/to/htmlfile.html>
+```
+
+This will start a server on "localhost" over port 3000.
+
+To view the host html file, navigate to your browser of choice and go to the following url
+```
+localhost:3000
+```
+or
+```
+127.0.0.1:3000
+```
+This should bring us to the host html file
 
 ## Logging
 <p align="center">
