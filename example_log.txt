@@ -1,5 +1,0 @@
-05-27-2021 00:31:05 - User cody started instance
-05-27-2021 00:31:22 - Command not found: thisisforanexample
-05-27-2021 00:31:36 - Incorrect use of site arguments check the usage by running 'help site'
-05-27-2021 00:33:27 - Command not found: rm
-05-27-2021 00:33:30 - User cody exited instance
