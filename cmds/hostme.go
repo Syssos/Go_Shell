@@ -23,6 +23,7 @@ func (hmc HostMe_cmd) Run() error{
 	if len(hmc.Args) > 0 {
 
 	    router := mux.NewRouter()
+	    // Creating route handler for "localhost:3000/"
 		router.HandleFunc("/", hmc.serveFiles).Methods("GET")
 
 		srv := &http.Server{
@@ -31,8 +32,10 @@ func (hmc HostMe_cmd) Run() error{
 		}
 
 		done := make(chan os.Signal, 1)
+		// Creating signal chan to handle ctrl+c
 		signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
+		// Go routine to start server and listen
 		go func() {
 			if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 				log.Fatalf("listen: %s\n", err)
@@ -40,26 +43,31 @@ func (hmc HostMe_cmd) Run() error{
 		}()
 		log.Print("Server Started")
 
+		// When ctrl+c is pressed Go routine is closed, code starts again here
 		<-done
 		log.Print("Server Stopped")
-		
+
+		// creating ctx variable to use for shutdown, using "blank" context, with timeout set to 5 seconds
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer func() {
-			// extra handling here
+
 			cancel()
 		}()
 
+		// attempting webserver shutdown
 		if err := srv.Shutdown(ctx); err != nil {
 			log.Fatalf("Server Shutdown Failed:%+v", err)
 		}
 		log.Print("Server Exited Properly")
+
+		// Stopping signals from being tracked by shell.
 		signal.Stop(done)
 		return nil
 
 	} else {
 		return errors.New("No file to serve")
 	}
-	return nil
+	return errors.New("End of hostme Run, if you see this theres a major error with the internal code")
 }
 // Prints usage message for command
 func (hmc HostMe_cmd) Usage() {
