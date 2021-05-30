@@ -20,8 +20,9 @@ func main() {
 	ls     := cmds.Ls_cmd{[]string{}}
 	site   := cmds.Site_cmd{[]string{}, "", false}
 	hostme := cmds.HostMe_cmd{[]string{}}
+	pond   := cmds.Pond_cmd{[]string{}}
 
-	command_struct := cmds.Commands{ls, pwd, cd, site, hostme}
+	command_struct := cmds.Commands{ls, pwd, cd, site, hostme, pond}
 	
 	// Creating Flog instance from settings/cmds.toml
 	flog := LoggerFromFile()

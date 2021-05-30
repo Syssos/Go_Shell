@@ -10,6 +10,7 @@ Go Shell is an interactive shell, aimed at automating tasks often used for creat
 - [Go](https://golang.org/)
 - TOML parsing package ([komkom/toml](https://github.com/komkom/toml))
 - HTTP request multiplexer ([gorilla/mux](https://github.com/gorilla/mux))
+- GofshTemplates ([README](https://github.com/Syssos/Go_Shell/tree/main/settings/GofshTemplates/README.md))
 
 While the usefulness of this package comes from the web specific commands, simple linux style commands are included to help with those commands.
 
@@ -27,6 +28,7 @@ While the usefulness of this package comes from the web specific commands, simpl
   * [Website Oriented Commands](#website-oriented-commands)
     - [site](#site)
     - [hostme](#hostme)
+    - [pond](#pond)
 - [Logging](#logging)
 - [Travis](#travis)
 - [Testing](#testing)
@@ -156,6 +158,18 @@ or
 127.0.0.1:3000
 ```
 This should bring us to the host html file
+
+### pond
+
+The pond command is a simple go web application enviornment creation tool. Meaning it will generate all of the basic files and folders needed to start working on a web application writen in go.
+
+Using this command will create a "pond" and generate a file/folder structure for a web application with the pond name as the applications name.
+
+Right now the command has one function and thats `create`. This command creates a "pond"
+
+```bash
+pond create <pond_name>
+```
 
 ## Logging
 <p align="center">

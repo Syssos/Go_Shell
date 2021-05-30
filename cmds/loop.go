@@ -33,6 +33,7 @@ type Commands struct {
 	Cd     Cd_cmd
 	Site   Site_cmd
 	Hostme HostMe_cmd
+	Pond   Pond_cmd
 }
 
 // Responsible for keeping track of commands and logger
@@ -141,6 +142,12 @@ func (l *Loop) runCommand(cmd string, args []string) (int, error) {
 		l.Command_struct.Hostme.Args = args
 		hostmeErr := execute(l.Command_struct.Hostme)
 		l.hasError(hostmeErr)
+		return 0, nil
+
+	case "pond":
+		l.Command_struct.Pond.Args = args
+		siteErr := execute(&l.Command_struct.Pond)
+		l.hasError(siteErr)
 		return 0, nil
 
 	default:
