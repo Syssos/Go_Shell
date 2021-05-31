@@ -1,7 +1,7 @@
 package main
 
 import (
-	
+	"os"
 	"fmt"
 	"time"
 	"bytes"
@@ -39,10 +39,10 @@ func main() {
 // Generating Flog instance from settings retrieved from file
 func LoggerFromFile() filelog.Flog {
 
-	file, openErr := ioutil.ReadFile("settings/cmds.toml")
-	if openErr != nil {
-		fmt.Println(openErr)
-	}
+	cwd, cwdErr := os.UserHomeDir()
+	checkErr(cwdErr)
+	file, openErr := ioutil.ReadFile(cwd + "/.pondLog.toml")
+	checkErr(openErr)
 
 	doc := string(file)
 	// Decodes toml to *json.Decoder
@@ -70,4 +70,10 @@ func LoggerFromFile() filelog.Flog {
 	
 	flog := filelog.Flog{ st.Logger.Greeting, st.Logger.Salute, st.Logger.LogFile, st.Logger.DtFormat, location, nil}
 	return flog
+}
+
+func checkErr(e error) {
+	if e != nil {
+		fmt.Println(e)
+	}
 }

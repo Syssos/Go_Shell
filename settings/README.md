@@ -3,7 +3,9 @@
 This directory will be dedicated to holding files required to store preset data such as log file locations and command abilities.
 
 ## Filelog (Logger)
-The filelog package will utilize settings saved in [cmds.toml](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml) in the this directory.
+The filelog package will utilize settings saved in [.pondLog.toml](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml) in the this directory.
+
+**In order for Filelog to utilize this file it must be stored in the home directory**
 
 If you are unfamiliar with the TOML format, more information can be found on their [github](https://github.com/toml-lang/toml) page.
 
