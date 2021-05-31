@@ -19,6 +19,7 @@ func (p *Pond_cmd) Run() error{
 			pond := Pond{Name: p.Args[1]}
 			pond.CreateFolders()
 			pond.CreateIndexHTML()
+			pond.Create404HTML()
 			pond.CreateStylesCSS()
 			pond.MovePondIcon()
 			pond.GenerateGoServer()
@@ -92,11 +93,10 @@ func (pond *Pond) CreateIndexHTML() {
 		fmt.Println("\nCreating index.html file content")
 		cwd, cwdErr := os.UserHomeDir()
 		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/index.html")
+		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/templates/index.html")
 	    checkErr(err)
 	    
 	    pageData := strings.Replace(string(dat), "{{title}}", pond.Name, -1)
-	    pageData = strings.Replace(pageData, "{{Images_Folder}}", pond.ImagesLocal, -1)
 	    
 		fmt.Println("Saving index.html file content")
 	    indErr := ioutil.WriteFile(pond.TempLocal + "/index.html", []byte(pageData), 0644)
@@ -107,13 +107,33 @@ func (pond *Pond) CreateIndexHTML() {
 	}
 }
 
+func (pond *Pond) Create404HTML() {
+	if _, exsistsErr := os.Stat(pond.TempLocal + "/404.html"); os.IsNotExist(exsistsErr) {
+		
+		fmt.Println("\nCreating 404.html file content")
+		cwd, cwdErr := os.UserHomeDir()
+		checkErr(cwdErr)
+		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/templates/404.html")
+	    checkErr(err)
+	    
+	    pageData := strings.Replace(string(dat), "{{title}}", pond.Name, -1)
+	    
+		fmt.Println("Saving 404.html file content")
+	    indErr := ioutil.WriteFile(pond.TempLocal + "/404.html", []byte(pageData), 0644)
+	    checkErr(indErr)
+		fmt.Println(color.Green + "404.html file created" + color.Reset)
+	} else {
+		fmt.Println(color.Red + "404.html already exsists" + color.Reset)
+	}
+}
+
 func (pond *Pond) CreateStylesCSS() {
 	if _, exsistsErr := os.Stat(pond.StylesLocal + "/main.css"); os.IsNotExist(exsistsErr) {
 		
 		fmt.Println("\nCreating main.css file content")
 		cwd, cwdErr := os.UserHomeDir()
 		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/styles.css")
+		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/static/styles/styles.css")
 	    checkErr(err)
 
 		fmt.Println("Saving main.css file content")
@@ -130,7 +150,7 @@ func (pond *Pond) MovePondIcon() {
 		
 		cwd, cwdErr := os.UserHomeDir()
 		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/Pond_Icon.ico")
+		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/static/images/Pond_Icon.ico")
 	    checkErr(err)
 
 	    err = ioutil.WriteFile(pond.ImagesLocal + "/Pond_Icon.ico", dat, 0644)
