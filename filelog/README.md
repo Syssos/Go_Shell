@@ -1,5 +1,10 @@
 # Filelog
 
+<p align="center">
+  <img src="https://github.com/Syssos/Go_Shell/blob/main/etc/images/Error_Log_Example.PNG" alt="Go Shell img"/>
+  <p align="center">Example held in <a href="https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt">settings/example_log.txt</a></p>
+</p>
+
 Filelog is a tool designed to quickly and easily log an incident to a file. This was original created to log any errors as well as a start/end timestamp.
 
 ## Install

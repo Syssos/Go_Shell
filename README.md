@@ -1,7 +1,7 @@
 # Go Shell [![Build Status](https://travis-ci.com/Syssos/Go_Shell.svg?branch=main)](https://travis-ci.com/github/Syssos/Go_Shell)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Go_Shell.png" alt="Go Shell img"/>
+  <img src="https://github.com/Syssos/Go_Shell/blob/main/etc/images/Go_Shell.png" alt="Go Shell img"/>
 </p>
 
 Go Shell is an interactive shell, aimed at automating tasks often used for creating, or testing web based applications. 
@@ -53,12 +53,9 @@ Alternativly you can install the "cmds" package with go get and create a script 
 As the project grows there will be more and more commands to keep track of. To help with keeping this readme to the point, information on the commands for this shell can be found in the readme in the [cmds](https://github.com/Syssos/Go_Shell/tree/main/cmds) directory.
 
 ## Logging
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Error_Log_Example.PNG" alt="Go Shell img"/>
-  <p align="center">Example held in <a href="https://github.com/Syssos/Go_Shell/blob/main/settings/example_log.txt">settings/example_log.txt</a></p>
-</p>
+The logging is handled by a [Flog](https://github.com/Syssos/Go_Shell/tree/main/filelog#filelog) instance. 
 
-The logging is handled by a [Flog](https://github.com/Syssos/Go_Shell/tree/main/filelog#filelog) instance. This instance is generated with settings saved in a TOML file. To learn more about the settings file check out the [readme](https://github.com/Syssos/Go_Shell/tree/main/settings) for it
+For the Goe Shll project a Flog instance is generated with settings saved in a TOML file. To learn more about the settings file, and how its used, check out the [readme](https://github.com/Syssos/Go_Shell/tree/main/settings).
 
 ## Travis
 Travis-CI is a continuous integration repository "extention". The badge at the top of the page represents the current status of the Go Shell program. This is impo
