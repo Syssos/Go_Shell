@@ -25,6 +25,7 @@ func (p *Pond_cmd) Run() error{
 				pond := Pond{Name: p.Args[1]}
 				pond.CreateFolders()
 				pond.CreateIndexHTML()
+				pond.CreateFormHTML()
 				pond.Create404HTML()
 				pond.CreateStylesCSS()
 				pond.MovePondIcon()
@@ -139,6 +140,27 @@ func (pond *Pond) Create404HTML() {
 		fmt.Println(color.Green + "404.html file created" + color.Reset)
 	} else {
 		fmt.Println(color.Red + "404.html already exsists" + color.Reset)
+	}
+}
+
+// Generate form template page for app
+func (pond *Pond) CreateFormHTML() {
+	if _, exsistsErr := os.Stat(pond.TempLocal + "/form.html"); os.IsNotExist(exsistsErr) {
+		
+		fmt.Println("\nCreating form.html file content")
+		cwd, cwdErr := os.UserHomeDir()
+		checkErr(cwdErr)
+		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/templates/form.html")
+	    checkErr(err)
+	    
+	    pageData := strings.Replace(string(dat), "{{title}}", pond.Name, -1)
+	    
+		fmt.Println("Saving form.html file content")
+	    indErr := ioutil.WriteFile(pond.TempLocal + "/form.html", []byte(pageData), 0644)
+	    checkErr(indErr)
+		fmt.Println(color.Green + "form.html file created" + color.Reset)
+	} else {
+		fmt.Println(color.Red + "form.html already exsists" + color.Reset)
 	}
 }
 
