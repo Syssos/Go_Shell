@@ -1,51 +1,143 @@
-# cmds package
+# Go Shell commands
 
-This package will contain a majority, if not all of the commands utilized by the shell.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG" alt="Go Shell img"/>
+</p>
 
-While this package will use a filelog.Flog instance from a [Flog](https://github.com/Syssos/Go_Shell/blob/main/filelog/filelog.go) struct, it is still importable and usable in other coding project, for whatever reason a shell would be needed.
+# Table of Contents
+- [Core Commands](#core-commands)
+	* [help](#help)
+	* [exit](#exit)
+	* [ls](#ls)
+	* [pwd](#pwd)
+	* [cd](#cd)
+- [site](#site)
+- [hostme](#hostme)
+- [pond](#pond)
+	* [Pond Example](#pond-example)
 
-## Install
+# Core Commands
 
-To install this package use the go get command
+Each command structure has a Usage() method which is called when the "help" command is ran. To use this feature, enter ```help``` followed by the command you need help with.
+
+## Help
+The help command is designed to work with every command the loop is able to run.
+
+```
+$ help ls
+```
+
+## Exit
+This exits the shell properly and allows for logging of the user quiting.
+
+```
+$ exit
+```
+## ls
+This command should work just about the same as it does an a native linux system, minus flag functionality. While it takes a location to list it cannot except other flags at the moment.
+
+```
+$ ls
+$ ls ../
+$ ls Go_Shell/
+```
+## pwd
+This command will print the working directory. Its a pretty straight forward command and doesn't take arguments.
+
+```
+$ pwd
+```
+## cd
+This command changes the working directory much like cd in linux, like ls this will take a location to change to but will not accept flags.
+
+```
+$ cd ../
+$ cd Go_Shell/
+```
+
+# site
+
+The site command is a command that allows for the user to see a status code for a specific url. 
+
+The purpose of this is mainly as a check to ensure the web application or program we are working with is returning an "OK" status.
+
+```
+$ site https://github.com/Syssos/Go_Shell
+```
+
+After the a url is entered the site command will "remember" the url, if at any point in that shell instance you want the status of that site, the word status can be used to indicate it.
+
+```
+$ site status
+```
+the output for both of these commands should be
+
+```
+200 - Site https://github.com/Syssos/Go_Shell is active
+```
+
+# hostme
+
+The host me command will spin up a small http server to temporarily host a single html file. 
+
+To use this command, enter the command name hostme, then the name of the file you would like to host
+
+```
+$ hostme <path/to/htmlfile.html>
+```
+
+This will start a server on "localhost" over port 3000.
+
+To view the host html file, navigate to your browser of choice and go to the following url
+```
+localhost:3000
+```
+or
+```
+127.0.0.1:3000
+```
+This should bring us to the host html file
+
+# pond
+
+The pond command is a simple go web application enviornment creation tool. Meaning it will generate all of the basic files and folders needed to start working on a web application writen in go.
+
+Using the "pond create" command will create a "pond" and generate all the files and folders we'll need for a basic web application.
+
+<p align="center">
+  <img src="https://github.com/Syssos/Go_Shell/blob/main/settings/images/PondCreate.PNG" alt="Go Shell img" width="675px" height="600"/>
+</p>
+
+The pond will be created with the pond name in mind, the templates will be generated to use the name of the pond
+
+Once the pond is created we can use CTRL+C to exit the Go Shell and cd into the newly created pond.
+**Note ponds are ment to be test enviornments used outside of the Go Shell**
+
+Once inside the new pond's directory run the `server.go` file with Go.
 
 ```bash
-go get github.com/Syssos/Go_Shell/cmds
+go run server.go
+```
+The server should start right up and tell us it is now listening on port 3000
+
+```
+Starting server on localhost:3000
 ```
 
-This package will also require the filelog package as it is a dependancy for the loop struct. To install that package you can use go get as well.
+When we see this message we should now be able to open are browser of choice, and navigate to localhost port 3000. When the page loads, the following should be seen.
 
-```bash
-go get github.com/Syssos/Go_Shell/filelog
+```
+http://localhost:3000
+```
+or
+```
+http://127.0.0.1:3000
 ```
 
-## Usage
-Every command in this file can be imported and ran in other projects if need be.
+<p align="center">
+  <img src="https://github.com/Syssos/Go_Shell/blob/main/settings/images/PondExampleApp.PNG" alt="Go Shell img"/>
+</p>
 
-This can be done by initualizing an instance of the command struct, and then calling the `Run()` method.
+## Pond Example
 
-an example of this, using the cmds.pwd command
-
-```go
-package main
-
-import (
-	"fmt"
-
-	"github.com/Syssos/Go_Shell/cmds"
-)
-
-func main () {
-	pwd_command := cmds.Pwd_cmd{[string]{}}
-	// pwd_command.Args = []string{"arguments", "command", "can", "handle"}
-
-	pwd_command.Run()
-}
-```
-
-This method should work for every command in the `cmds` package, as they are all designed to be called based off of the Run() method.
-
-Keep in mind that the `cmd.Args` value needs to be a slice of commands that are of type string. The loop is responsible for parsing, so a string line as shown below, will not work.
-
-```go
-pwd_command.Args = "arguments command can handle" //will not work, mismatched type string and []string
-```
+Ponds are meant to give a developer the means to start up a basic web application so they can get to testing services as fast as possible. To give you an example lets make a web application that reverses string, with the pond that was created above

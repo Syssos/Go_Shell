@@ -14,25 +14,6 @@ Go Shell is an interactive shell, aimed at automating tasks often used for creat
 
 While the usefulness of this package comes from the web specific commands, simple linux style commands are included to help with those commands.
 
-## Table of Contents
-- [Overview](#go-shell)
-- [Table of Contents](#table-of-contents)
-- [Install](#install)
-- [Usage](#usage)
-  * [Core Commands](#core-commands)
-    - [help](#help)
-    - [exit](#exit)
-    - [ls](#ls)
-    - [pwd](#pwd)
-    - [cd](#cd)
-  * [Website Oriented Commands](#website-oriented-commands)
-    - [site](#site)
-    - [hostme](#hostme)
-    - [pond](#pond)
-- [Logging](#logging)
-- [Travis](#travis)
-- [Testing](#testing)
-
 ## Install
 
 All of the packages used in this repository were designed with external usablility in mind. Each package directory will contain a readme with all of the information you'll need to get started. The directions below should get you started with using the shell as.
@@ -69,107 +50,7 @@ For me that looks something like
 Alternativly you can install the "cmds" package with go get and create a script that utilizes the cmds, and filelog packages much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
 ## Usage
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG" alt="Go Shell img"/>
-</p>
-
-### Core Commands
-
-Each command structure has a Usage() method which is called when the "help" command is ran. To use this feature, enter ```help``` followed by the command you need help with.
-
-### Help
-The help command is designed to work with every command the loop is able to run.
-
-```
-$ help ls
-```
-
-### Exit
-This exits the shell properly and allows for logging of the user quiting.
-
-```
-$ exit
-```
-### ls
-This command should work just about the same as it does an a native linux system, minus flag functionality. While it takes a location to list it cannot except other flags at the moment.
-
-```
-$ ls
-$ ls ../
-$ ls Go_Shell/
-```
-### pwd
-This command will print the working directory. Its a pretty straight forward command and doesn't take arguments.
-
-```
-$ pwd
-```
-### cd
-This command changes the working directory much like cd in linux, like ls this will take a location to change to but will not accept flags.
-
-```
-$ cd ../
-$ cd Go_Shell/
-```
-
-## Website Oriented Commands
-
-The commands under this section will be related to http request based commands.
-
-### site
-
-The site command is a command that allows for the user to see a status code for a specific url. 
-
-The purpose of this is mainly as a check to ensure the web application or program we are working with is returning an "OK" status.
-
-```
-$ site https://github.com/Syssos/Go_Shell
-```
-
-After the a url is entered the site command will "remember" the url, if at any point in that shell instance you want the status of that site, the word status can be used to indicate it.
-
-```
-$ site status
-```
-the output for both of these commands should be
-
-```
-200 - Site https://github.com/Syssos/Go_Shell is active
-```
-
-### hostme
-
-The host me command will spin up a small http server to temporarily host a single html file. 
-
-To use this command, enter the command name hostme, then the name of the file you would like to host
-
-```
-$ hostme <path/to/htmlfile.html>
-```
-
-This will start a server on "localhost" over port 3000.
-
-To view the host html file, navigate to your browser of choice and go to the following url
-```
-localhost:3000
-```
-or
-```
-127.0.0.1:3000
-```
-This should bring us to the host html file
-
-### pond
-
-The pond command is a simple go web application enviornment creation tool. Meaning it will generate all of the basic files and folders needed to start working on a web application writen in go.
-
-Using this command will create a "pond" and generate a file/folder structure for a web application with the pond name as the applications name.
-
-Right now the command has one function and thats `create`. This command creates a "pond"
-
-```bash
-pond create <pond_name>
-```
+As the project grows there will be more and more commands to keep track of. To help with keeping this readme to the point, information on the commands for this shell can be found in the readme in the [cmds](https://github.com/Syssos/Go_Shell/tree/main/cmds) directory.
 
 ## Logging
 <p align="center">
