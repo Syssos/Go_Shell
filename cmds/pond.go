@@ -9,31 +9,42 @@ import (
 
 	"github.com/Syssos/Go_Shell/color"
 )
+
+// Structure used to call pond command
 type Pond_cmd struct {
 	Args []string
 }
 
+// Function called when user uses the "pond" command
 func (p *Pond_cmd) Run() error{
+
 	if len(p.Args) > 0 {
-		if len(p.Args) > 1 && p.Args[0] == "create" {
-			pond := Pond{Name: p.Args[1]}
-			pond.CreateFolders()
-			pond.CreateIndexHTML()
-			pond.Create404HTML()
-			pond.CreateStylesCSS()
-			pond.MovePondIcon()
-			pond.GenerateGoServer()
-			return nil
+		if p.Args[0] == "create" {
+			if len(p.Args) > 1 {	
+				// Create new pond with name p.Args[1], ($ pond create p.Args[1])
+				pond := Pond{Name: p.Args[1]}
+				pond.CreateFolders()
+				pond.CreateIndexHTML()
+				pond.Create404HTML()
+				pond.CreateStylesCSS()
+				pond.MovePondIcon()
+				pond.MoveGoServer()
+				return nil
+			} else {
+				return errors.New("Cannot create pond without name, check usage with \"help pond\"")
+			}
 		}
 	}
 
-	return errors.New("No pond method")
+	return errors.New("pond method not found, check usage with \"help pond\"")
 }
 
-func (p *Pond_cmd) Usage() {
-	fmt.Println(color.Yellow + "\n\tpond - Creates a local server for go web application\n\n\t\tpond create <pondName>\n" + color.Reset)
+// Prints the usage message for the pond command
+func (p Pond_cmd) Usage() {
+	fmt.Println(color.Yellow + "\n\tpond - Creates a directory and basic files for a go web application\n\n\t\tpond create <pondName>\n" + color.Reset)
 }
 
+// Structure for pond, stores all data needed to keep track of file locations
 type Pond struct {
 	Name        string
 	Local       string
@@ -44,12 +55,12 @@ type Pond struct {
 	JsLocal     string
 }
 
+// Creates a folder for all the files needed by the webapp
 func (pond *Pond) CreateFolders() {
 
 	cwd, err := os.Getwd()
 	checkErr(err)
 
-	// Creating Paths
 	var allPaths []string
 
 	ppath := "/" + pond.Name
@@ -71,9 +82,10 @@ func (pond *Pond) CreateFolders() {
 	pond.JsLocal = pond.StaticLocal + "/js"
 	allPaths = append(allPaths, pond.JsLocal)
 
+	// Creating folder for each path above
 	for _, pth := range allPaths {
 		if _, err := os.Stat(pth); os.IsNotExist(err) {
-			// path/to/whatever does not exist
+			
 			fmt.Println("Creating: ", pth)
 			errDir := os.MkdirAll(pth, 0755)
 			if errDir != nil {
@@ -86,6 +98,7 @@ func (pond *Pond) CreateFolders() {
 	}
 }
 
+// Creates index template for app
 func (pond *Pond) CreateIndexHTML() {
 	
 	if _, exsistsErr := os.Stat(pond.TempLocal + "/index.html"); os.IsNotExist(exsistsErr) {
@@ -96,6 +109,7 @@ func (pond *Pond) CreateIndexHTML() {
 		dat, err := ioutil.ReadFile(cwd + "/GofshTemplates/templates/index.html")
 	    checkErr(err)
 	    
+	    // Replaces values in template while coping to reflect current pond
 	    pageData := strings.Replace(string(dat), "{{title}}", pond.Name, -1)
 	    
 		fmt.Println("Saving index.html file content")
@@ -107,6 +121,7 @@ func (pond *Pond) CreateIndexHTML() {
 	}
 }
 
+// Generates 404 teplate for error page on app
 func (pond *Pond) Create404HTML() {
 	if _, exsistsErr := os.Stat(pond.TempLocal + "/404.html"); os.IsNotExist(exsistsErr) {
 		
@@ -127,6 +142,7 @@ func (pond *Pond) Create404HTML() {
 	}
 }
 
+// Copies CSS stylesheet to static/styles
 func (pond *Pond) CreateStylesCSS() {
 	if _, exsistsErr := os.Stat(pond.StylesLocal + "/main.css"); os.IsNotExist(exsistsErr) {
 		
@@ -145,6 +161,7 @@ func (pond *Pond) CreateStylesCSS() {
 	}
 }
 
+// Copies image used in pond webapp to static/images folder
 func (pond *Pond) MovePondIcon() {
 	if _, exsistsErr := os.Stat(pond.ImagesLocal + "/Pond_Icon.ico"); os.IsNotExist(exsistsErr) {
 		
@@ -161,7 +178,8 @@ func (pond *Pond) MovePondIcon() {
 	}
 }
 
-func (pond *Pond) GenerateGoServer() {
+// Copies go web server file to ponds "Local" directory
+func (pond *Pond) MoveGoServer() {
 	if _, exsistsErr := os.Stat(pond.Local + "/server.go"); os.IsNotExist(exsistsErr) {
 	
 		fmt.Println("\nCreating server.go file content")
@@ -182,6 +200,7 @@ func (pond *Pond) GenerateGoServer() {
 	}
 }
 
+// Checks for errors in unction returns
 func checkErr(err error) {
 	if err != nil {
 		fmt.Println(color.Red + "", err, "" + color.Reset)

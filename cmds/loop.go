@@ -179,6 +179,10 @@ func (l *Loop)helpCommand(cmd string) (int, error){
 		PrintUsage(l.Command_struct.Hostme)
 		return 0, nil
 
+	case "pond":
+		PrintUsage(l.Command_struct.Pond)
+		return 0, nil
+
 	default:
 		return 1, errors.New(fmt.Sprintf("Command not found: %v", cmd))
 
