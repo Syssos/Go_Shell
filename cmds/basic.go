@@ -1,11 +1,9 @@
 /*
 	This file will contain all of the basic commands needed to have a functioning shell. This includes commands like ls and cd.
-
 	Commands in this file:
 		ls  - list file's in directories
 		cd  - change current directory
 		pwd - Prints working directory
-
 	As of now no arguments can be handled by the commands, however the ability to add them was not prevented, more so muted while basic functionality was being worked out.
 */
 package cmds
