@@ -53,7 +53,7 @@ Alternativly you can install the "cmds" package with go get and create a script 
 ## Setup
 To fully utilize this package some files will need to be placed in the home directory.
 
-Inside of the config folder is a `.pondLog.toml` file and a `GofshTemplates/` folder. Move both of these items to the home, or `~/` directory, before running the shell for the first time. This will preven errors from the logger and allow for bod to create the templates.
+Inside of the config folder is a `.pondLog.toml` file and a `GofshTemplates/` folder. Move both of these items to the home, or `~/` directory, before running the shell for the first time. This will prevent errors from the logger and allow for "pond create" to generate files.
 
 ## Usage
 As the project grows there will be more and more commands to keep track of. To help with keeping this readme to the point, information on the commands for this shell can be found in the readme in the [cmds](https://github.com/Syssos/Go_Shell/tree/main/cmds) directory.
