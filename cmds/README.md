@@ -134,10 +134,8 @@ or
 http://127.0.0.1:3000
 ```
 
-<p align="center">
-  <img src="https://github.com/Syssos/Go_Shell/blob/main/settings/images/PondExampleApp.PNG" alt="Go Shell img"/>
-</p>
-
 ## Pond Example
 
-Ponds are meant to give a developer the means to start up a basic web application so they can get to testing services as fast as possible. To give you an example lets make a web application that reverses string, with the pond that was created above
+Ponds are meant to give a developer the means to start up a basic web application so they can get to testing services as fast as possible. 
+
+An example of how this is acheived was created and stored within the [etc/Revero](https://github.com/Syssos/Go_Shell/tree/main/etc/Revero) directory.
