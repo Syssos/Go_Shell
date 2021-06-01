@@ -26,6 +26,7 @@ To get the files we need clone the package to a location you can use.
 
 ``` 
 git clone https://github.com/Syssos/Go_Shell.git
+
 ```
 Once the repository is cloned cd into it. 
 
@@ -49,13 +50,18 @@ For me that looks something like
 ```
 Alternativly you can install the "cmds" package with go get and create a script that utilizes the cmds, and filelog packages much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
 
+## Setup
+To fully utilize this package some files will need to be placed in the home directory.
+
+Inside of the config folder is a `.pondLog.toml` file and a `GofshTemplates/` folder. Move both of these items to the home, or `~/` directory, before running the shell for the first time. This will preven errors from the logger and allow for bod to create the templates.
+
 ## Usage
 As the project grows there will be more and more commands to keep track of. To help with keeping this readme to the point, information on the commands for this shell can be found in the readme in the [cmds](https://github.com/Syssos/Go_Shell/tree/main/cmds) directory.
 
 ## Logging
 The logging is handled by a [Flog](https://github.com/Syssos/Go_Shell/tree/main/filelog#filelog) instance. 
 
-For the Goe Shll project a Flog instance is generated with settings saved in a TOML file. To learn more about the settings file, and how its used, check out the [readme](https://github.com/Syssos/Go_Shell/tree/main/settings).
+The Go Shll project uses a Flog instance generated with settings saved in a TOML file. To learn more about the settings file, and how its used, check out the [readme](https://github.com/Syssos/Go_Shell/tree/main/config).
 
 ## Travis
 Travis-CI is a continuous integration repository "extention". The badge at the top of the page represents the current status of the Go Shell program. This is impo

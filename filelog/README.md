@@ -28,8 +28,6 @@ flog := filelog.Flog{ Greeting, Salute, LogFile, DtFormat, location, nil}
 ```
 **Note the last value when creating a Flog struct is nil because it will hold an err if one is present**
 
-Inside of the [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) file is an example of the Flog instance being created from a TOML file.
-
 Once the instance is created, to log a file, the Log method can be utilized.
 
 ### Logging strings (no timestamp)
@@ -55,7 +53,4 @@ if err != nil {
 
 The code above will log the error message to the log file as well as print the error to the screen using a Println function.
 
-## Using TOML
-The Go Shell program utilizes toml settings to configure the logger for this project.
-
-Creating the Flog instance from TOML formated data can be seeing in [`LoggerFromFile()`](https://github.com/Syssos/Go_Shell/blob/main/main.go), the settings used to configure the Flog can be found in the [`settings/cmds.toml`](https://github.com/Syssos/Go_Shell/blob/main/settings/cmds.toml) file.
+If you are intrested in how toml was utilized, to store preset values for the logger in the Go Shell project, look inside of the [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) file is an example of the Flog instance being created from a TOML file.
