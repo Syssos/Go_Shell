@@ -1,7 +1,7 @@
 # Go Shell commands
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Syssos/Go_Shell/main/settings/images/Shell.PNG" alt="Go Shell img"/>
+  <img src="https://github.com/Syssos/Go_Shell/blob/main/etc/images/Shell.PNG" alt="Go Shell img"/>
 </p>
 
 # Table of Contents
@@ -28,13 +28,13 @@ $ help ls
 ```
 
 ## Exit
-This exits the shell properly and allows for logging of the user quiting.
+This exits the shell properly and allows for logging of the user quitting.
 
 ```
 $ exit
 ```
 ## ls
-This command should work just about the same as it does an a native linux system, minus flag functionality. While it takes a location to list it cannot except other flags at the moment.
+This command should work just about the same as it does on a native linux system, minus flag functionality. While it takes a location to list it cannot accept other flags at the moment.
 
 ```
 $ ls
@@ -42,7 +42,7 @@ $ ls ../
 $ ls Go_Shell/
 ```
 ## pwd
-This command will print the working directory. Its a pretty straight forward command and doesn't take arguments.
+This command will print the working directory. It's a pretty straight forward command and doesn't take arguments.
 
 ```
 $ pwd
@@ -65,7 +65,7 @@ The purpose of this is mainly as a check to ensure the web application or progra
 $ site https://github.com/Syssos/Go_Shell
 ```
 
-After the a url is entered the site command will "remember" the url, if at any point in that shell instance you want the status of that site, the word status can be used to indicate it.
+After a url is entered the site command will "remember" the url, if at any point in that shell instance you want the status of that site, the word status can be used to indicate it.
 
 ```
 $ site status
@@ -100,7 +100,7 @@ This should bring us to the host html file
 
 # pond
 
-The pond command is a simple go web application enviornment creation tool. Meaning it will generate all of the basic files and folders needed to start working on a web application writen in go.
+The pond command is a simple web application environment creation tool. Meaning it will generate all of the basic files and folders needed to start working on a web application written in go.
 
 Using the "pond create" command will create a "pond" and generate all the files and folders we'll need for a basic web application.
 
@@ -111,7 +111,7 @@ Using the "pond create" command will create a "pond" and generate all the files 
 The pond will be created with the pond name in mind, the templates will be generated to use the name of the pond
 
 Once the pond is created we can use CTRL+C to exit the Go Shell and cd into the newly created pond.
-**Note ponds are ment to be test enviornments used outside of the Go Shell**
+**Note ponds are meant to be test environments used outside of the Go Shell**
 
 Once inside the new pond's directory run the `server.go` file with Go.
 
@@ -124,7 +124,7 @@ The server should start right up and tell us it is now listening on port 3000
 Starting server on localhost:3000
 ```
 
-When we see this message we should now be able to open are browser of choice, and navigate to localhost port 3000. When the page loads, the following should be seen.
+When you see this message you should now be able to open a browser of your choice, and navigate to localhost port 3000. When the page loads, the following should be seen.
 
 ```
 http://localhost:3000
@@ -136,6 +136,6 @@ http://127.0.0.1:3000
 
 ## Pond Example
 
-Ponds are meant to give a developer the means to start up a basic web application so they can get to testing services as fast as possible. 
+Ponds are meant to give a developer the means to start up a basic web application so they can get to testing services as fast as possible.
 
-An example of how this is acheived was created and stored within the [etc/Revero](https://github.com/Syssos/Go_Shell/tree/main/etc/Revero) directory.
+An example of how this is achieved was created and stored within the [etc/Revero](https://github.com/Syssos/Go_Shell/tree/main/etc/Revero) directory.
