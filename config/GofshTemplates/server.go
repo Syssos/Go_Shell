@@ -67,14 +67,8 @@ func SubmitPage (w http.ResponseWriter, r *http.Request) {
 // Handles 404 error page
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
     w.WriteHeader(status)
-    fmt.Println(r.URL)
-    dat, err := ioutil.ReadFile("./templates/404.html")
-    checkErr(err)
-
-    pageData := strings.Replace(string(dat), "{{url}}", fmt.Sprintf("%v", r.URL), -1)
-    if status == http.StatusNotFound {
-        fmt.Fprint(w, pageData)
-    }
+    
+    http.ServeFile(w, r, "./templates/404.html")
 }
 
 // Checks for errors throughout code to save space
