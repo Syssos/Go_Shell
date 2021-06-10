@@ -3,7 +3,7 @@
 This package has one intended purpose. Fast and easy access to multiple colors to use on the output of a program.
 
 ## Install
-This package has the most use case outside of a shell enviornment. Making it a perfect package to utilize in other projects, while simple it gets the job done
+This package has the most use case outside of a shell environment. Making it a perfect package to utilize in other projects, while simple it gets the job done
 
 To install this package use the go get command
 
@@ -13,17 +13,16 @@ go get github.com/Syssos/Go_Shell/color
 This should download the package and install it in the `$GOPATH/src` directory.
 
 ## Usage
-Once the package is retreived with go get we should be able to start using it in another package.
+Once the package is retrieved with go get we should be able to start using it in another package.
 
-That starts with an import statment
+That starts with an import statement
 
 ```go
 import "github.com/Syssos/Go_Shell/color"
 ```
-
 Each "color" is of type string. To color text, append the text you would like to print to the color of your choice.
 
-After the text and color are concated, we need to append the reset value to the end of the string. This will tell the compiler we are done using that color.
+After the text and color are concat, we need to append the reset value to the end of the string. This will tell the compiler we are done using that color.
 
 ```go
 str := color.Red + "This is a test" + color.Reset
