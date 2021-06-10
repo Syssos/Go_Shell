@@ -3,9 +3,7 @@ package main
 import (
     "log"
     "fmt"
-    "strings"
     "net/http"
-    "io/ioutil"
     "html/template"
 )
 
