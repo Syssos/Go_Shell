@@ -2,6 +2,8 @@
 
 DIR="$HOME/.gofsh"
 
+mkdir "$HOME/go/bin"
+
 if [ -d "$DIR" ]; then
   go test -v ./
   ./clean.sh
