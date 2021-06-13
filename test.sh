@@ -2,6 +2,7 @@
 
 DIR="$HOME/.gofsh"
 
+mkdir "$HOME/go"
 mkdir "$HOME/go/bin"
 
 if [ -d "$DIR" ]; then
