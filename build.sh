@@ -17,6 +17,12 @@ else
   cp -r "./etc/config/pond_templates" "$DIR"
 fi
 
+# check for go folder
+GODIR="$HOME/go/bin"
+if [ -d "$GODIR" ]; then
+  mkdir "$GODIR"
+fi
+
 # Install commands for shell
 echo ""
 echo "Building pond command..."
