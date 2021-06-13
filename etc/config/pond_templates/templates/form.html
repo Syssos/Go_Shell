@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<title>{{title}}</title>
+		<link rel="stylesheet" href="static/styles/main.css">
+		<link rel = "icon" href="static/images/Pond_Icon.ico" type="image/x-icon">
+	</head>
+
+	<body>
+		<div class="header cp_color">
+			
+			<h1>Submit Form</h1>
+			<div class="pages cp_color">
+				<a href="/">Home</a>
+				<a href="/form">Form</a>
+				<a href="#">page2</a>
+			</div>
+
+		</div>
+		<div class="mainContainer">
+			
+			<div>
+			  <form method="POST" action="/form">     
+			      <label>Name</label><input name="name" type="text" value="" />
+			      <input type="submit" value="submit" />
+			  </form>
+			</div>
+			
+			{{if .DataInput}}
+				<p>{{.Name}}</p>
+			{{end}}
+		
+		</div>
+	</body>
+</html>
