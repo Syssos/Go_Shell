@@ -4,7 +4,7 @@
   <img src="https://syssos.app/static/images/index/gofsh.png" alt="Go Shell img"/>
 </p>
 
-Gofsh is an interactive/non-interactive shell, aimed at automating tasks often used for creating, or testing web based applications. 
+An interactive or non-interactive go based shell, aimed at automating tasks often used for creating, or testing web based applications. 
 
 ### Dependancies for module:
 - [Go](https://golang.org/)
@@ -22,7 +22,7 @@ git clone https://github.com/Syssos/gofsh.git
 ```
 Once the repository is cloned cd into it. 
 
-When inside of the Go_Shell directory we should be able to install and build the program using the build.sh script.
+When inside of the gofsh directory we should be able to install and build the program using the build.sh script.
 
 ``` bash
 cd gofsh
@@ -43,11 +43,6 @@ gofsh
 If you would like to use the shell in non-interactive mode, then the commands can be passed to gofsh as arguments
 
 ```bash
-gofsh cmd arg
-```
-and example of this with an actual command would be
-
-```bash
 gofsh site https://cody.syssos.app
 ```
 
@@ -59,7 +54,7 @@ Gofsh uses a Flog instance generated with settings saved in a TOML file. These s
 The logger will use the built in "time" package from go. To find more configuration settings that can be used for this logger, [this](https://www.geeksforgeeks.org/time-formatting-in-golang/) link should help find more information.
 
 ## Travis
-Travis-CI is a continuous integration repository "extension". The badge at the top of the page represents the current status of the Go Shell program. This is impo
+Travis-CI is a continuous integration repository "extension". The badge at the top of the page represents the current status of the gofsh program.
 
 Due to the current state of the program, major changes can be introduced at any time. To prevent errors from occuring to someone who clones the repo, the travis build state is indicated at the top of this readme.
 
