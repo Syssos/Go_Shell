@@ -5,10 +5,15 @@ import (
     "fmt"
     "path"
     "time"
+    "bytes"
     "bufio"
     "errors"
     "strings"
     "os/exec"
+    "io/ioutil"
+    "encoding/json"
+
+    "github.com/komkom/toml"
 
     "github.com/Syssos/gofsh/src/color"
     "github.com/Syssos/gofsh/src/filelog"
@@ -17,7 +22,7 @@ import (
 const linuxpath = "/usr/bin/"
 var linuxcmds   = []string{"touch", "cd", "pwd", "ls"}
 var codycmds    = []string{"site", "pond", "r2h"}
-var logger      = filelog.Flog{"User started Shell Interactive", "User ended Shell Interactive", "/tmp/GoShellLogfile.txt", "01-02-2006 15:04:05", time.FixedZone("UTC -7", -7*60*60), nil}
+var logger      = loggerFromFile()
 
 func main() {
     // output, err := exec.Command("/home/cody/go/bin/commands/site", "https://syssos.app").Output()
@@ -157,3 +162,41 @@ func interactiveShell() {
     }
 }
 
+func loggerFromFile() filelog.Flog {
+
+    cwd, cwdErr := os.UserHomeDir()
+    if cwdErr != nil {
+        fmt.Println(cwdErr)
+    }
+    file, openErr := ioutil.ReadFile(cwd + "/.gofsh/config/LogSettings.toml")
+    if openErr != nil {
+        fmt.Println(openErr)
+    }
+
+    doc := string(file)
+    // Decodes toml to *json.Decoder
+    dec := json.NewDecoder(toml.New(bytes.NewBufferString(doc)))
+    
+    st  := struct {
+      Logger struct {
+        Greeting string `json: "Greeting"`
+        Salute string `json: "Salute"`
+        LogFile string `json: "LogFile"`
+        DtFormat string `json: "DtFormat"`
+        DtTimeZone string `json: "DtTimeZone"`
+        DtOffset int `json: "DtOffset"`
+        Errormsg bool `json: "Errormsg"`
+      } `json: "Logger"`
+    }{}
+
+    err := dec.Decode(&st)
+    if err != nil {
+      panic(err)
+    }
+
+    // Setting the error logs timestamp, timezone
+    location := time.FixedZone(st.Logger.DtTimeZone, st.Logger.DtOffset*60*60)
+    
+    flog := filelog.Flog{ st.Logger.Greeting, st.Logger.Salute, st.Logger.LogFile, st.Logger.DtFormat, location, nil}
+    return flog
+}

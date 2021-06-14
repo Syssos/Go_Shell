@@ -14,7 +14,7 @@ else
   mkdir "$PONDDIR"
   echo ""
   echo "Coping files from etc/config/pond_templates to $PONDDIR"
-  cp -r "./etc/config/pond_templates" "$DIR"
+  cp -r ./etc/config/* "$DIR"
 fi
 
 # check for go folder
@@ -33,6 +33,9 @@ echo "Building site command..."
 go build "./src/commands/site/site.go"
 
 mv "pond" "r2h" "site" "$HOME/go/bin"
+
+# Install needed packages
+go get github.com/komkom/toml
 
 # Install goshell
 echo ""

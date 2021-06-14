@@ -25,30 +25,24 @@ To start things off this will require some knowledge of working with Go modules,
 To get the files we need to clone the package to a location you can use.
 
 ``` 
-git clone https://github.com/Syssos/Go_Shell.git
+git clone https://github.com/Syssos/gofsh.git
 
 ```
 Once the repository is cloned cd into it. 
 
-When inside of the Go_Shell directory we should be able to install and build the program with no issues.
+When inside of the Go_Shell directory we should be able to install and build the program using the build.sh script.
+
 ```
-cd Go_Shell
+cd gofsh
+
+chmod u+x build.sh && ./build.sh
 ```
+
 Thanks to the help of [travis](#travis) we should see that the package is in working condition.
 
 Installing the shell will cause ```go get``` to grab any associated packages and install them in the ```$GOPATH/src``` folder.
 
-```
-go install .
-```
-
-This will place a compiled binary file in "$PATH/bin" called "Go_Shell". Running this command will give you the Go Shell.
-
-For me that looks something like
-```
-~/go/bin/Go_Shell
-```
-Alternatively you can install the "cmds" package with go get and create a script that utilizes the cmds, and filelog packages much like [main.go](https://github.com/Syssos/Go_Shell/blob/main/main.go) does.
+This will place a compiled binary file in "$HOME/go/bin" called "gofsh". Running this command will give you the gofsh Shell.
 
 ## Setup
 To fully utilize this package some files will need to be placed in the home directory.
