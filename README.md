@@ -1,4 +1,4 @@
-# Go Shell [![Build Status](https://travis-ci.com/Syssos/gofsh.svg?branch=main)](https://travis-ci.com/github/Syssos/gofsh)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
+# Gofsh [![Build Status](https://travis-ci.com/Syssos/gofsh.svg?branch=main)](https://travis-ci.com/github/Syssos/gofsh)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
 
 <p align="center">
   <img src="https://syssos.app/static/images/index/gofsh.png" alt="Go Shell img"/>
