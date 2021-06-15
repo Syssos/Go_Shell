@@ -38,13 +38,10 @@ type Pond struct {
 // Creates a folder for all the files needed by the webapp
 func (pond *Pond) CreateFolders() {
 
-	cwd, err := os.Getwd()
-	checkErr(err)
-
 	var allPaths []string
 
-	ppath := "/" + pond.Name
-	pond.Local = cwd + ppath
+	ppath := "./" + pond.Name
+	pond.Local = ppath
 	allPaths = append(allPaths, pond.Local)
 
 	pond.TempLocal = pond.Local + "/templates"
@@ -84,9 +81,8 @@ func (pond *Pond) CreateIndexHTML() {
 	if _, exsistsErr := os.Stat(pond.TempLocal + "/index.html"); os.IsNotExist(exsistsErr) {
 		
 		fmt.Println("\nCreating index.html file content")
-		cwd, cwdErr := os.UserHomeDir()
-		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/.gofsh/pond_templates/templates/index.html")
+
+		dat, err := ioutil.ReadFile("/etc/gofsh/pond_templates/templates/index.html")
 	    checkErr(err)
 	    
 	    // Replaces values in template while coping to reflect current pond
@@ -106,9 +102,8 @@ func (pond *Pond) Create404HTML() {
 	if _, exsistsErr := os.Stat(pond.TempLocal + "/404.html"); os.IsNotExist(exsistsErr) {
 		
 		fmt.Println("\nCreating 404.html file content")
-		cwd, cwdErr := os.UserHomeDir()
-		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/.gofsh/pond_templates/templates/404.html")
+
+		dat, err := ioutil.ReadFile("/etc/gofsh/pond_templates/templates/404.html")
 	    checkErr(err)
 	    
 	    pageData := strings.Replace(string(dat), "{{title}}", pond.Name, -1)
@@ -127,9 +122,8 @@ func (pond *Pond) CreateFormHTML() {
 	if _, exsistsErr := os.Stat(pond.TempLocal + "/form.html"); os.IsNotExist(exsistsErr) {
 		
 		fmt.Println("\nCreating form.html file content")
-		cwd, cwdErr := os.UserHomeDir()
-		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/.gofsh/pond_templates/templates/form.html")
+
+		dat, err := ioutil.ReadFile("/etc/gofsh/pond_templates/templates/form.html")
 	    checkErr(err)
 	    
 	    pageData := strings.Replace(string(dat), "{{title}}", pond.Name, -1)
@@ -148,9 +142,8 @@ func (pond *Pond) CreateStylesCSS() {
 	if _, exsistsErr := os.Stat(pond.StylesLocal + "/main.css"); os.IsNotExist(exsistsErr) {
 		
 		fmt.Println("\nCreating main.css file content")
-		cwd, cwdErr := os.UserHomeDir()
-		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/.gofsh/pond_templates/static/styles/styles.css")
+
+		dat, err := ioutil.ReadFile("/etc/gofsh/pond_templates/static/styles/styles.css")
 	    checkErr(err)
 
 		fmt.Println("Saving main.css file content")
@@ -166,14 +159,13 @@ func (pond *Pond) CreateStylesCSS() {
 func (pond *Pond) MovePondIcon() {
 	if _, exsistsErr := os.Stat(pond.ImagesLocal + "/Pond_Icon.ico"); os.IsNotExist(exsistsErr) {
 		
-		cwd, cwdErr := os.UserHomeDir()
-		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/.gofsh/pond_templates/static/images/Pond_Icon.ico")
+		
+		dat, err := ioutil.ReadFile("/etc/gofsh/pond_templates/static/images/Pond_Icon.ico")
 	    checkErr(err)
 
 	    err = ioutil.WriteFile(pond.ImagesLocal + "/Pond_Icon.ico", dat, 0644)
 	    checkErr(err)
-	    fmt.Println("\nPond_Icon.ico copied successfully from", cwd + "/.gofsh/pond_templates/Pond_Icon.ico")
+	    fmt.Println("\nPond_Icon.ico copied successfully from", "/etc/gofsh/pond_templates/Pond_Icon.ico")
 	} else {
 		fmt.Println("Pond_Icon.ico already exsists")
 	}
@@ -184,9 +176,7 @@ func (pond *Pond) MoveGoServer() {
 	if _, exsistsErr := os.Stat(pond.Local + "/server.go"); os.IsNotExist(exsistsErr) {
 	
 		fmt.Println("\nCreating server.go file content")
-		cwd, cwdErr := os.UserHomeDir()
-		checkErr(cwdErr)
-		dat, err := ioutil.ReadFile(cwd + "/.gofsh/pond_templates/server.go")
+		dat, err := ioutil.ReadFile("/etc/gofsh/pond_templates/server.go")
 	    checkErr(err)
 	    
 	    // Use area for replacing variables in go file

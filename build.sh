@@ -1,30 +1,26 @@
 #!/bin/bash
 
 # Create gofsh folder at /home/usr/gofsh
-DIR="$HOME/.gofsh"
-PONDDIR="$HOME/.gofsh/pond_templates"
+DIR="/etc/gofsh"
 
 if [ -d "$DIR" ]; then
   echo "Directory $DIR exists, is the application installed?"
   exit 1
 else
   echo "Createing directory $DIR"
-  mkdir "$DIR"
-  echo "Createing directory $PONDDIR"
-  mkdir "$PONDDIR"
+  sudo mkdir "$DIR"
   echo ""
-  echo "Coping files from etc/config/pond_templates to $PONDDIR"
-  cp -r ./etc/config/* "$DIR"
+  sudo cp -r ./etc/config/* "$DIR"
 fi
 
 # check for go folder
 GODIR="$HOME/go/bin"
-if [ -d "$GODIR" ]; then
+if [ ! -d "$GODIR" ]; then
   mkdir "$GODIR"
+  echo ""
 fi
 
 # Install commands for shell
-echo ""
 echo "Building pond command..."
 go build "./src/commands/pond/pond.go"
 echo "Building r2h command..."

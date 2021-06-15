@@ -157,12 +157,8 @@ func nonInteractiveShell() {
 }
 
 func loggerFromFile() filelog.Flog {
-
-    cwd, cwdErr := os.UserHomeDir()
-    if cwdErr != nil {
-        fmt.Println(cwdErr)
-    }
-    file, openErr := ioutil.ReadFile(cwd + "/.gofsh/config/LogSettings.toml")
+    
+    file, openErr := ioutil.ReadFile("/etc/gofsh/config/LogSettings.toml")
     if openErr != nil {
         fmt.Println(openErr)
     }

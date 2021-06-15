@@ -31,7 +31,16 @@ chmod u+x build.sh && ./build.sh
 
 Installing the shell will cause ```go get``` to grab any associated packages and install them in the ```$GOPATH/src``` folder.
 
-The build shell script will also place the gofsh bin file in a location executable.
+## Uninstalling
+The go shell will place files in the following locations.
+
+```
+github.com/Syssos/gofsh/etc/config/*                 -> /etc/config
+github.com/Syssos/gofsh/bin/* (built from build.sh)  -> $HOME/go/bin
+
+gofsh binary                                         -> /usr/bin
+```
+The [clean.sh](https://github.com/Syssos/gofsh/blob/main/clean.sh) will remove the files from the computer, however will not remove any files created from the shell.
 
 ## Usage
 Gofsh will handle interactive and non-interactive usage. If you which to run the interactive shell, then doing so can be started with the gofsh command.
