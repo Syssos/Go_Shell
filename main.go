@@ -19,16 +19,14 @@ import (
     "github.com/Syssos/gofsh/src/filelog"
 )
 
-const linuxpath = "/usr/bin/"
-var linuxcmds   = []string{"touch", "pwd", "ls"}
-var codycmds    = []string{"site", "pond", "r2h"}
+var codycmds    = []string{"site", "pond", "r2h", "cd"}
 var logger      = loggerFromFile()
 
 func main() {
     
     if len(os.Args) > 1 {
         // None interactive mode
-        nonInteractiveShell()
+        check(nonInteractiveShell())
     } else {
         // Interactive mode
         logger.Greet()
@@ -37,19 +35,34 @@ func main() {
     }
 }
 
-func runLinux(cmd string, args string) {
-    if args != "" {
-        output, err := exec.Command(linuxpath+cmd, args).Output()
-        check(err)
-        fmt.Println(color.Green + string(output) + color.Reset)
-    } else {
-        output, err := exec.Command(linuxpath+cmd).Output()
-        check(err)
-        fmt.Println(color.Green + string(output) + color.Reset)
+func runLinux(command string, args string) error {
+    paths := getPathSlice()
+
+    if command == "" {
+        return errors.New("Missing command argument")
     }
+
+    for _, path := range paths {
+        if _, err := os.Stat(path+"/"+command); !os.IsNotExist(err) {
+            if args != "" {
+                output, err := exec.Command(path+"/"+command, args).Output()
+                check(err)
+                fmt.Println(color.Green + string(output) + color.Reset)
+                return nil
+            } else {
+                output, err := exec.Command(path+"/"+command).Output()
+                check(err)
+                fmt.Println(color.Green + string(output) + color.Reset)
+                return nil
+            }
+        }
+    }
+
+    return errors.New("Command not found")
 }
 
 func runCody(cmd string, args string) {
+
     if args != "" {
         output, err := exec.Command(filelog.GetHomeDir() + "/go/bin/" + cmd, args).Output()
         check(err)
@@ -61,24 +74,10 @@ func runCody(cmd string, args string) {
     }
 }
 
-// creates parsed slice from string based off spaces
-func createCmdSlice(cmd string) []string {
-
-    commands := []string{}
-
-    words := strings.Fields(cmd)
-    for _, word := range words {
-        commands = append(commands, word)
-    }
-
-    return commands
-}
-
 func interactiveShell() {
     
     for ;; {
         args := ""
-        handled := false
         cwd   := filelog.GetCurrentDir()
         cuser := filelog.GetUser()
         
@@ -93,30 +92,25 @@ func interactiveShell() {
             if parsed_input[0] == "exit" {
         
                 break
-            } else {
+            } else if parsed_input[0] == "cd" {
+                if len(parsed_input) > 1 {
+                    check(Gofshcd(strings.Join(parsed_input[1:], " ")))
+                } else {
+                    fmt.Println("no directory to change to")
+                }
+            }else {
                 if len(parsed_input) > 1 {
                     args = strings.Join(parsed_input[1:], " ")
                 }
                 for x, cmd := range codycmds {
                     if parsed_input[0] == cmd {
                         runCody(codycmds[x], args)
-                        handled = true
+                        break
                     }
                 }
 
-                for x, cmd := range linuxcmds {
-                    if parsed_input[0] == cmd {
-                        runLinux(linuxcmds[x], args)
-                        handled = true
-                    }
-                }
-
-                if handled == true {
-                    handled = false
-                } else {
-                    logger.Errormsg = errors.New("No valid command found")
-                    logger.Err()
-                }
+                lerr := runLinux(parsed_input[0], args)
+                check(lerr)
             }   
         } else {
                 // Blank input was passed, restarting loop to collect input
@@ -124,9 +118,8 @@ func interactiveShell() {
     }
 }
 
-func nonInteractiveShell() {
+func nonInteractiveShell() error{
     args := ""
-    handled := false
 
     if len(os.Args) > 2 {
         args = strings.Join(os.Args[2:], " ")
@@ -136,24 +129,15 @@ func nonInteractiveShell() {
         if os.Args[1] == cmd {
             runCody(codycmds[x], args)
             logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
-            handled = true
+            return nil
         }
     }
 
-    for x, cmd := range linuxcmds {
-        if os.Args[1] == cmd {
-            runLinux(linuxcmds[x], args)
-            logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
-            handled = true
-        }
-    }
+    lerr := runLinux(os.Args[1], args)
+    check(lerr)
+    logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
 
-    if handled == true {
-        handled = false
-    } else {
-        logger.Errormsg = errors.New("No valid command found")
-        logger.Err()
-    }
+    return nil
 }
 
 func loggerFromFile() filelog.Flog {
@@ -197,4 +181,43 @@ func check(err error) {
         logger.Err()
         fmt.Println(err.Error())
     }
+}
+
+func Gofshcd(path string) error {
+    if path != "" {
+        os.Chdir(path)
+        return nil
+    } else {
+        return errors.New("No directory to change to")
+    }
+}
+
+// creates parsed slice from string based off spaces
+func createCmdSlice(cmd string) []string {
+
+    commands := []string{}
+
+    words := strings.Fields(cmd)
+    for _, word := range words {
+        commands = append(commands, word)
+    }
+
+    return commands
+}
+
+func getPathSlice() []string {
+    pathenvvar := os.Getenv("PATH")
+    paths := []string{}
+    path := []string{}
+
+    for _, char := range []rune(pathenvvar) {
+        if char == 58 {
+            paths = append(paths, strings.Join(path, ""))
+            path = []string{}
+        } else {
+            path = append(path, string(char))
+        }
+    }
+
+    return(paths)
 }

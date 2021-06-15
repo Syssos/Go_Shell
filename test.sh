@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="$HOME/.gofsh"
+DIR="/etc/gofsh"
 
 mkdir "$HOME/go"
 mkdir "$HOME/go/bin"
