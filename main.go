@@ -20,45 +20,15 @@ import (
 )
 
 const linuxpath = "/usr/bin/"
-var linuxcmds   = []string{"touch", "cd", "pwd", "ls"}
+var linuxcmds   = []string{"touch", "pwd", "ls"}
 var codycmds    = []string{"site", "pond", "r2h"}
 var logger      = loggerFromFile()
 
 func main() {
-    // output, err := exec.Command("/home/cody/go/bin/commands/site", "https://syssos.app").Output()
     
     if len(os.Args) > 1 {
         // None interactive mode
-        args := ""
-        handled := false
-
-        if len(os.Args) > 2 {
-            args = strings.Join(os.Args[2:], " ")
-        }
-
-        for x, cmd := range codycmds {
-            if os.Args[1] == cmd {
-                runCody(codycmds[x], args)
-                logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
-                handled = true
-            }
-        }
-
-        for x, cmd := range linuxcmds {
-            if os.Args[1] == cmd {
-                runLinux(linuxcmds[x], args)
-                logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
-                handled = true
-            }
-        }
-
-        if handled == true {
-            handled = false
-        } else {
-            logger.Errormsg = errors.New("No valid command found")
-            logger.Err()
-        }
-
+        nonInteractiveShell()
     } else {
         // Interactive mode
         logger.Greet()
@@ -88,14 +58,6 @@ func runCody(cmd string, args string) {
         output, err := exec.Command(filelog.GetHomeDir() + "/go/bin/" + cmd).Output()
         check(err)
         fmt.Println(string(output))
-    }
-}
-
-func check(err error) {
-    if err != nil {
-        logger.Errormsg = err
-        logger.Err()
-        fmt.Println(err.Error())
     }
 }
 
@@ -162,6 +124,38 @@ func interactiveShell() {
     }
 }
 
+func nonInteractiveShell() {
+    args := ""
+    handled := false
+
+    if len(os.Args) > 2 {
+        args = strings.Join(os.Args[2:], " ")
+    }
+
+    for x, cmd := range codycmds {
+        if os.Args[1] == cmd {
+            runCody(codycmds[x], args)
+            logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
+            handled = true
+        }
+    }
+
+    for x, cmd := range linuxcmds {
+        if os.Args[1] == cmd {
+            runLinux(linuxcmds[x], args)
+            logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
+            handled = true
+        }
+    }
+
+    if handled == true {
+        handled = false
+    } else {
+        logger.Errormsg = errors.New("No valid command found")
+        logger.Err()
+    }
+}
+
 func loggerFromFile() filelog.Flog {
 
     cwd, cwdErr := os.UserHomeDir()
@@ -199,4 +193,12 @@ func loggerFromFile() filelog.Flog {
     
     flog := filelog.Flog{ st.Logger.Greeting, st.Logger.Salute, st.Logger.LogFile, st.Logger.DtFormat, location, nil}
     return flog
+}
+
+func check(err error) {
+    if err != nil {
+        logger.Errormsg = err
+        logger.Err()
+        fmt.Println(err.Error())
+    }
 }
