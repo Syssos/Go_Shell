@@ -31,6 +31,26 @@ chmod u+x build.sh && ./build.sh
 
 Installing the shell will cause ```go get``` to grab any associated packages and install them in the ```$GOPATH/src``` folder.
 
+### Configuration
+When the gofsh shell is first installed the default logger settings will have the logfile stored in /tmp. If you would like to have a more permanent log file, it is recommended that the settings file is updated.
+
+Gofsh uses settings generated with information saved in a TOML file. These settings are stored and configured in the [``` /etc/gofsh/config/LogSettings.toml ```](https://github.com/Syssos/gofsh/blob/main/etc/config/config/LogSettings.toml) file.
+
+Changing the LogFile value to the path and filename you would like to use will change where the log file is saved.
+
+Note that the filename does not need to be an existing file, but the path to the file must be valid.
+
+```bash
+/path/must/exist/youdecide.txt
+```
+my log file location
+
+```bash
+/home/syssos/Documents/gofsh_logs/gofshlog.txt
+```
+
+The logger will use the built in "time" package from Go, to generate the timestamp. To find more information on configuration settings that can be used for this logger, [this](https://www.geeksforgeeks.org/time-formatting-in-golang/) link should help.
+
 ## Uninstalling
 The go shell will place files in the following locations.
 
@@ -54,19 +74,6 @@ If you would like to use the shell in non-interactive mode, then the commands ca
 ```bash
 gofsh site https://cody.syssos.app
 ```
-
-## Logging
-The logging is handled by a [Flog](https://github.com/Syssos/gofsh/tree/main/src/filelog#filelog) instance. 
-
-Gofsh uses a Flog instance generated with settings saved in a TOML file. These settings are stored and configured in the [``` $HOME/.gofsh/config/LogSettings.toml ```](https://github.com/Syssos/gofsh/blob/main/etc/config/config/LogSettings.toml)
-
-The logger will use the built in "time" package from go. To find more configuration settings that can be used for this logger, [this](https://www.geeksforgeeks.org/time-formatting-in-golang/) link should help find more information.
-
-## Travis
-Travis-CI is a continuous integration repository "extension". The badge at the top of the page represents the current status of the gofsh program.
-
-Due to the current state of the program, major changes can be introduced at any time. To prevent errors from occuring to someone who clones the repo, the travis build state is indicated at the top of this readme.
-
 ## Testing 
 
 There are 2 testing methods accounted for in this repository. The first is a generic all around test for the gofsh functionality, this is done with the [gofsh_test.go](https://github.com/Syssos/gofsh/blob/main/gofsh_test.go) file. Due to travis being used for this project, the [test.sh](https://github.com/Syssos/gofsh/blob/main/test.sh) script is included for travis to run upon the latest commit.

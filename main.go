@@ -36,7 +36,8 @@ func main() {
     }
 }
 
-func runLinux(command string, args string) error {
+// Runs linux command's and handles errors for commands that don't exist
+func runLinux(command string, args []string) error {
     paths := getPathSlice()
 
     if command == "" {
@@ -45,14 +46,19 @@ func runLinux(command string, args string) error {
 
     for _, path := range paths {
         if _, err := os.Stat(path+"/"+command); !os.IsNotExist(err) {
-            if args != "" {
-                output, err := exec.Command(path+"/"+command, args).Output()
+            if len(args) > 0 {
+                
+                cmd := exec.Command(path+"/"+command)
+                cmd.Args = args
+                output,err := cmd.Output()
                 check(err)
+                
                 fmt.Println(color.Green + string(output) + color.Reset)
                 return nil
             } else {
                 output, err := exec.Command(path+"/"+command).Output()
                 check(err)
+                
                 fmt.Println(color.Green + string(output) + color.Reset)
                 return nil
             }
@@ -62,10 +68,13 @@ func runLinux(command string, args string) error {
     return errors.New("Command not found")
 }
 
-func runCody(cmd string, args string) {
+// Runs custom commands, handles calling cd command
+func runCody(cmd string, args []string) {
 
-    if args != "" {
-        output, err := exec.Command(filelog.GetHomeDir() + "/go/bin/" + cmd, args).Output()
+    if len(args) > 0 {
+        cmd := exec.Command(filelog.GetHomeDir() + "/go/bin/" + cmd)
+        cmd.Args = args
+        output, err := cmd.Output()
         check(err)
         fmt.Println(string(output))
     } else {
@@ -75,10 +84,10 @@ func runCody(cmd string, args string) {
     }
 }
 
+// Loop for interactive portion of the shell
 func interactiveShell() {
     
     for ;; {
-        args := ""
         cwd   := filelog.GetCurrentDir()
         cuser := filelog.GetUser()
         
@@ -100,17 +109,14 @@ func interactiveShell() {
                     fmt.Println("no directory to change to")
                 }
             }else {
-                if len(parsed_input) > 1 {
-                    args = strings.Join(parsed_input[1:], " ")
-                }
-                for x, cmd := range codycmds {
+                for _, cmd := range codycmds {
                     if parsed_input[0] == cmd {
-                        runCody(codycmds[x], args)
+                        runCody(parsed_input[0], parsed_input)
                         break
                     }
                 }
 
-                lerr := runLinux(parsed_input[0], args)
+                lerr := runLinux(parsed_input[0], parsed_input)
                 check(lerr)
             }   
         } else {
@@ -119,28 +125,30 @@ func interactiveShell() {
     }
 }
 
+// Executes commands from non-interactive shell call
 func nonInteractiveShell() error{
-    args := ""
 
-    if len(os.Args) > 2 {
-        args = strings.Join(os.Args[2:], " ")
+    // Check for cd command
+    if os.Args[1] == "cd" {
+        return errors.New("Non-Interactive shell does not support the cd command")
     }
 
-    for x, cmd := range codycmds {
+    for _, cmd := range codycmds {
         if os.Args[1] == cmd {
-            runCody(codycmds[x], args)
+            runCody(os.Args[1], os.Args[1:])
             logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
             return nil
         }
     }
 
-    lerr := runLinux(os.Args[1], args)
+    lerr := runLinux(os.Args[1], os.Args[1:])
     check(lerr)
     logger.Logmsg(fmt.Sprintf("%v, command ran from non-interactive mode", strings.Join(os.Args[1:], " ")))
 
     return nil
 }
 
+// Sets settings for logger from toml config file
 func loggerFromFile() filelog.Flog {
     
     file, openErr := ioutil.ReadFile("/etc/gofsh/config/LogSettings.toml")
@@ -176,27 +184,46 @@ func loggerFromFile() filelog.Flog {
     return flog
 }
 
+// checks for and logs errors found in function calls from source code.
 func check(err error) {
     if err != nil {
         logger.Errormsg = err
         logger.Err()
-        fmt.Println(err.Error())
     }
 }
 
+// Handles changing the current working directory
 func Gofshcd(path string) error {
     if path == "-" && lastdir != ""{
         changeto := lastdir
         lastdir = CurrentWorkingDirectory()
+        
         os.Chdir(changeto)
+        
+        if CurrentWorkingDirectory() == lastdir {
+            return errors.New(fmt.Sprintf("Error switching to directory %v", path))
+        }
         return nil
     } else if path != "" {
         lastdir = CurrentWorkingDirectory()
+        
         os.Chdir(path)
+
+        // Check if the file directory changed
+        if CurrentWorkingDirectory() == lastdir {
+            return errors.New(fmt.Sprintf("Error switching to directory %v", path))
+        }
         return nil
     } else {
         return errors.New("No directory to change to")
     }
+}
+
+// Returns the current working directory
+func CurrentWorkingDirectory() string {
+    path, err := os.Getwd()
+    check(err)
+    return path
 }
 
 // creates parsed slice from string based off spaces
@@ -212,6 +239,7 @@ func createCmdSlice(cmd string) []string {
     return commands
 }
 
+// Returns slice of paths, found within $PATH
 func getPathSlice() []string {
     pathenvvar := os.Getenv("PATH")
     paths := []string{}
@@ -227,10 +255,4 @@ func getPathSlice() []string {
     }
 
     return(paths)
-}
-
-func CurrentWorkingDirectory() string {
-    path, err := os.Getwd()
-    check(err)
-    return path
 }
