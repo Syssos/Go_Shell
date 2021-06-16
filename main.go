@@ -21,6 +21,7 @@ import (
 
 var codycmds    = []string{"site", "pond", "r2h", "cd"}
 var logger      = loggerFromFile()
+var lastdir     = CurrentWorkingDirectory()
 
 func main() {
     
@@ -184,7 +185,13 @@ func check(err error) {
 }
 
 func Gofshcd(path string) error {
-    if path != "" {
+    if path == "-" && lastdir != ""{
+        changeto := lastdir
+        lastdir = CurrentWorkingDirectory()
+        os.Chdir(changeto)
+        return nil
+    } else if path != "" {
+        lastdir = CurrentWorkingDirectory()
         os.Chdir(path)
         return nil
     } else {
@@ -220,4 +227,10 @@ func getPathSlice() []string {
     }
 
     return(paths)
+}
+
+func CurrentWorkingDirectory() string {
+    path, err := os.Getwd()
+    check(err)
+    return path
 }
