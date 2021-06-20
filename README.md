@@ -34,7 +34,7 @@ Installing the shell will cause ```go get``` to grab any associated packages and
 ### Configuration
 When the gofsh shell is first installed the default logger settings will have the logfile stored in /tmp. If you would like to have a more permanent log file, it is recommended that the settings file is updated.
 
-Gofsh uses settings generated with information saved in a TOML file. These settings are stored and configured in the [``` /etc/gofsh/config/LogSettings.toml ```](https://github.com/Syssos/gofsh/blob/main/etc/config/config/LogSettings.toml) file.
+Gofsh uses settings generated with information saved in a TOML file. These settings are stored and configured in the file [``` /etc/gofsh/config/LogSettings.toml ```](https://github.com/Syssos/gofsh/blob/main/etc/config/config/LogSettings.toml).
 
 Changing the LogFile value to the path and filename you would like to use will change where the log file is saved.
 
