@@ -1,4 +1,4 @@
-# Gofsh [![Build Status](https://travis-ci.com/Syssos/gofsh.svg?branch=main)](https://travis-ci.com/github/Syssos/gofsh)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://syssos.app)
+# Gofsh [![Build Status](https://travis-ci.com/Syssos/gofsh.svg?branch=main)](https://travis-ci.com/github/Syssos/gofsh)  [![Cody Code](https://syssos.app/static/images/index/cody_code.svg)](https://cody.syssos.app/gofsh)
 
 <p align="center">
   <img src="https://syssos.app/static/images/index/gofsh.png" alt="Go Shell img"/>
@@ -49,13 +49,13 @@ my log file location
 /home/syssos/Documents/gofsh_logs/gofshlog.txt
 ```
 
-The logger will use the built in "time" package from Go, to generate the timestamp. To find more information on configuration settings that can be used for this logger, [this](https://www.geeksforgeeks.org/time-formatting-in-golang/) link should help.
+The logger will use the built in "time" package from Go, to generate the timestamp. To find more information on configuration settings that can be used for this logger, [this](https://yourbasic.org/golang/format-parse-string-time-date-example/) link should help.
 
 ## Uninstalling
 The go shell will place files in the following locations.
 
 ```
-github.com/Syssos/gofsh/etc/config/*                 -> /etc/config
+github.com/Syssos/gofsh/etc/config/*                 -> /etc/gofsh/config
 github.com/Syssos/gofsh/bin/* (built from build.sh)  -> $HOME/go/bin
 
 gofsh binary                                         -> /usr/bin
@@ -63,7 +63,7 @@ gofsh binary                                         -> /usr/bin
 The [clean.sh](https://github.com/Syssos/gofsh/blob/main/clean.sh) will remove the files from the computer, however will not remove any files created from the shell.
 
 ## Usage
-Gofsh will handle interactive and non-interactive usage. If you which to run the interactive shell, then doing so can be started with the gofsh command.
+Gofsh will handle interactive and non-interactive usage. If you wish to use the non-interactive shell, then doing so can be done by passing gofsh the command and the arguments.
 
 ```bash
 gofsh
