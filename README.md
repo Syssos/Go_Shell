@@ -1,7 +1,7 @@
-# Gofsh [![Build Status](https://travis-ci.com/Syssos/gofsh.svg?branch=main)](https://travis-ci.com/github/Syssos/gofsh) [![Gofsh Docs](https://docs.codyparal.com/static/images/Syssos_Doc.svg)](https://docs.codyparal.com/?project=1&category=intro_gf)
+# Gofsh [![Build Status](https://travis-ci.com/Syssos/gofsh.svg?branch=main)](https://travis-ci.com/github/Syssos/gofsh) [![Gofsh Docs](https://codyparal.com/static/images/Syssos_Doc.svg)](https://codyparal.com/)
 
 <p align="center">
-  <img src="https://syssos.app/static/images/index/gofsh.png" alt="Go Shell img"/>
+  <img src="https://codyparal.com/static/images/gofsh.png" alt="Go Shell img"/>
 </p>
 
 https://docs.codyparal.com/static/images/Syssos_Doc.svg
