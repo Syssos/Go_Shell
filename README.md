@@ -4,8 +4,6 @@
   <img src="https://codyparal.com/static/images/gofsh.png" alt="Go Shell img"/>
 </p>
 
-https://docs.codyparal.com/static/images/Syssos_Doc.svg
-
 An interactive or non-interactive go based shell, aimed at automating tasks often used for creating, or testing web based applications. 
 
 ### Dependancies for module:
